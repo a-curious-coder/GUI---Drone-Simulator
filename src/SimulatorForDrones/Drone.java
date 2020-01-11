@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class Drone extends Circle { // Drone extends circle attributes - represented by circle.
 
-    private final static List<Drone> Drones = new LinkedList<Drone>();   // ArrayList to hold all 'Drone' objects - Group of Drones
+    public final static List<Drone> Drones = new LinkedList<Drone>();   // ArrayList to hold all 'Drone' objects - Group of Drones
 
     private static int nDrones = 20;                        // Number of drones
     private static int radiusLimit = 10;                    // ----
@@ -21,7 +21,7 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
     private static int droneCounter = 0;
     private final int panelWidth;                           // ??
     private final int panelHeight;                          // ??
-    public Color color;
+    public Color color = Color.BLACK;
 
     private Vector v1 = Cohesion(),
                    v2 = Separation(),
@@ -40,26 +40,64 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
      * Called dependant on what parameters are given upon request.
      */
     public Drone(int pWidth, int pHeight) {
-        Random rnd = new Random();
-        this.panelWidth = pWidth;
-        this.panelHeight = pHeight;
-        location = new Vector();                                        // instantiate location
-        location.x = rnd.nextInt() * panelWidth;                        // location vector within this constructor set to location variable outside of constructor's value.
-        location.y = rnd.nextInt() * panelHeight;                       // "" with height
 
-        this.droneNumber = droneCounter++;                              // Iterate droneNumber for printing specific drone no.
+        this.panelWidth = pWidth;                                       // panelWidth value is changed from default null to pWidth value
+        this.panelHeight = pHeight;                                     // "" with height
+        setRandomLocation();                                            // Sets random location for drone within window size.
         this.locationToDraw = new Vector();                             // Instantiate locationToDraw Vector
+        this.droneNumber = droneCounter++;                              // Iterate droneNumber for printing specific drone no.
+
         System.out.println("Created drone: " + this.droneNumber);       // Prints drone number to console.
     }
 
     public Drone (Drone drone)  {
+
         Random rnd = new Random();                                      // Instantiate Random
+
+        this.color = drone.color;                                       // Sets drone color.
         this.panelWidth = drone.panelWidth;                             // panelWidth value not set, set to drone.panelWidth
         this.panelHeight = drone.panelHeight;                           // "" with height
+        this.velocity = new Vector(drone.velocity);                     // "" velocity
         this.location = new Vector(drone.location);                     // this.location equal to Vector (drone.location)
         this.locationToDraw = new Vector(drone.locationToDraw);         // "" locationToDraw
-        this.velocity = new Vector(drone.velocity);                     // "" velocity
-        this.color = drone.color;                                       // color = drone.color
+    }
+
+    public static void initialiseDrones(int pWidth, int pHeight)  {
+
+        for (int i = 0; i < nDrones; i++) {
+
+            Drones.add(new Drone(pWidth, pHeight));
+            System.out.println("Drone: " + i + "\t pWidth/pHeight: " + pWidth + " " + pHeight);
+        }
+    }
+
+    /**
+     * setRandomLocation function - sets the location of a drone to random value when constructor is called.
+     * No two drones will have same position.
+     *
+     */
+    private void setRandomLocation()    {
+
+        Random rnd = new Random();
+        location = new Vector();                                        // Instantiate location
+        location.x = rnd.nextInt(panelWidth);                           // location x element of vector set to random value * panel width
+        location.y = rnd.nextInt(panelHeight);                          // "" y with height
+
+        while(true) {
+
+            for (Drone drone : Drones) {
+
+                if (location.x == drone.location.x && location.y == drone.location.y) {     // if location.x and location.y are equal to any other drones x and y coords
+
+                    location.x = rnd.nextInt(panelWidth);               // Re-roll random x coordinate
+                    location.y = rnd.nextInt(panelHeight);              // Re-roll random y coordinate
+                } else {
+
+                    return;                                             // Exit function as x and y coordinates are unique
+                }
+            }
+        }
+
     }
 
     /**
@@ -67,6 +105,7 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
      *
      */
     public void MoveAllDrones()   {
+
         velocity.add(Cohesion(), Separation(), Alignment());
         limitVelocity();
         locationToDraw.add(velocity);
@@ -83,6 +122,11 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
         if (locationToDraw.y < 0) {
             locationToDraw.y = panelHeight;
         }
+    }
+
+    public LinkedList<Drone> draw(LinkedList<Drone> Drones) {
+
+        return Drones;
     }
 
     /**
@@ -168,18 +212,8 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
         }
     }
 
-    public static void initDrones(int pWidth, int pHeight)  {
 
-        for (int i = 0; i < nDrones; i++) {
-
-            Drones.add(new Drone(pWidth, pHeight));
-        }
-    }
-
-   
-
-
-    public List<Drone> flock() {
+    /*public List<Drone> flock() {
 
         List<Drone> flock = new LinkedList<Drone>();
 
@@ -191,7 +225,7 @@ public class Drone extends Circle { // Drone extends circle attributes - represe
             }
         }
         return flock;
-    }
+    }*/
 
     private boolean isInDroneFlock(final Vector loc) {
 
