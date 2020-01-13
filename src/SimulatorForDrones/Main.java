@@ -1,6 +1,7 @@
 package SimulatorForDrones;
 
 // JavaFX Libraries
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -9,11 +10,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Main extends Application {
 
-    private static List Drones = Drone.Drones;
+    private static List<Drone> Drones = Drone.Drones;
+    int sceneWidth = Settings.SCENE_WIDTH;
+    int sceneHeight = Settings.SCENE_HEIGHT;
+    Color sceneColour = Settings.BACKGROUND_COLOR;
+
+    Pane arena;
     /**
      *
      * @param primaryStage   - Applies these attribute settings to the stage it's given
@@ -21,32 +29,38 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
 
-        BorderPane root = new BorderPane();             // create containers
-        Pane layerPane = new Pane();                    // Entire simulation represented by layers. These layers produce animation.
-        Pane arena = new Pane();                        // arena for our sprites
-        Scene scene = new Scene(root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT); // Creates scene with desired size and settings
+        BorderPane root = new BorderPane();                                         // Create container
+        Pane layerPane = new Pane();                                                // Entire simulation represented by layers. These layers produce animation.
 
-        Circle circle = new Circle(4, Color.RED);
-        circle.relocate(Settings.SCENE_WIDTH/2, Settings.SCENE_HEIGHT/2);
+        arena = new Pane();                                                         // arena for our drones
+        arena.setPrefSize(sceneWidth, sceneHeight);                                 // set size for arena
 
-        arena.setPrefSize(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-        Drone.initialiseDrones(Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+        root.setCenter(layerPane);                                                  // set layerPane to center of borderPane 'root'
 
-        for(int i = 0; i < Drones.size(); i++)   {
-            System.out.println("Drone: " + Drone.Drones.get(i));
-            //layerPane.getChildren().add();
-        }
+        Scene scene = new Scene(root, sceneWidth, sceneHeight, sceneColour);        // defines settings for scene
 
-        layerPane.getChildren().addAll(arena, circle);          // Gives the current layer whatever is contained within the arena pane
-        root.setCenter(layerPane);                      // Sets layerpane to center of scene
 
-        primaryStage.setTitle("Drone Simulator");
+        primaryStage.setTitle("Drone Simulator");                                   // set window title
         primaryStage.setScene(scene);                                               // Sets scene for stage
         primaryStage.show();                                                        // Shows stage.
 
+        // Creates drones, adds them to 'Drones' ArrayList
+        Drone.initialiseDrones();
 
-        //spawnDrones();                                // Add drones
+        // Adds drones to arena on GUI
+        arena.getChildren().addAll(Drone.Drones);
 
-        //startSimulator();                             // Run animation loop
+        AnimationTimer loop = new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+
+                Drone.Drones.forEach(Drone::MoveDrone);
+                Drone.Drones.forEach(Drone::updateUI);
+
+            }
+        };
+
+        loop.start();
     }
 }

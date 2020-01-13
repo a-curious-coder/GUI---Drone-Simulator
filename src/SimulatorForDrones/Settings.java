@@ -1,12 +1,12 @@
 package SimulatorForDrones;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
 
 public class Settings {
 
     public static int SCENE_WIDTH = 500;
     public static int SCENE_HEIGHT = 500;
-    public final static Color BACKGROUND_COLOR = Color.WHITE;
+    public final static Color BACKGROUND_COLOR = Color.GREY;
 
     public static int DRONE_COUNT = 40;
 
