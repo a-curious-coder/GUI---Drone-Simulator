@@ -30,12 +30,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws InterruptedException {
 
         BorderPane root = new BorderPane();                                         // Create container
-        Pane layerPane = new Pane();                                                // Entire simulation represented by layers. These layers produce animation.
 
         arena = new Pane();                                                         // arena for our drones
         arena.setPrefSize(sceneWidth, sceneHeight);                                 // set size for arena
 
-        root.setCenter(layerPane);                                                  // set layerPane to center of borderPane 'root'
+        root.setCenter(arena);                                                      // set layerPane to center of borderPane 'root'
 
         Scene scene = new Scene(root, sceneWidth, sceneHeight, sceneColour);        // defines settings for scene
 
@@ -49,7 +48,8 @@ public class Main extends Application {
 
         // Adds drones to arena on GUI
         arena.getChildren().addAll(Drone.Drones);
-
+        Drone.Drones.forEach(Drone::MoveDrone);
+        Drone.Drones.forEach(Drone::updateUI);
         AnimationTimer loop = new AnimationTimer() {
 
             @Override

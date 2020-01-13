@@ -1,14 +1,11 @@
 package SimulatorForDrones;
 
 // JavaFX Libraries
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;  // Colour library
 import javafx.scene.shape.Circle; // Imports Circle library and allows me to represent a drone with the circle.
 
 // Java Libraries
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -24,10 +21,6 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
     private static int velocityLimit = 15;
     private static int droneFlockRadius = 10;               // Flock Radius (size)
     private static int droneCounter = 0;
-    
-    private Vector locationToDraw;
-    
-    private Circle circle = new Circle();
 
     private int droneID;
     private double v;
@@ -49,7 +42,10 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
         this.droneID = id;                          // Set drone ID
         this.v = v;                                 // Set velocity
-        
+
+        location = new Vector((int) x,(int) y);
+        velocity = new Vector((int)v, (int)v);
+
         setRadius(droneRadius);
         setStroke(this.color);
         setFill(color.deriveColor(1, 1, 1, 0.2));
@@ -72,8 +68,8 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
        for (int i = 0; i < nDrones; i++) {
 
             // random positions set.
-            double x = rnd.nextDouble() * Settings.SCENE_WIDTH;
-            double y = rnd.nextDouble() * Settings.SCENE_HEIGHT;
+            double x = rnd.nextDouble() * sceneWidth;
+            double y = rnd.nextDouble() * sceneHeight;
              
             // Random velocity, based on speed
             double v = Math.random() * 4 + 1d; // 1d = initial velocity
@@ -82,7 +78,7 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
             Drones.add(drone);
             droneCounter = i+1;
-            System.out.println("Drone: " + droneCounter);
+            System.out.println("Drone: " + droneCounter + "X: " + x + " Y: " + y);
         }
     }
 
@@ -114,25 +110,6 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
         }
 
     }
-    
-
-    public static void updateDrones() {
-//        updates++;,
-//        if (updates == updateSkip) {
-//            updates = 1;
-        for (Drone drone : Drones) {
-            drone.MoveDrone();
-        }
-//        }
-//        for (Boid boid : boids) {
-//            // makes the boids move slowlier
-//            boid.positionToDraw = new Vector(boid.position);
-//            boid.positionToDraw.subtract(boid.velocity);
-//            Vector ivel = new Vector(boid.velocity);
-//            ivel.multiply(updates / (double) updateSkip);
-//            boid.positionToDraw.add(ivel);
-//        }
-    }
 
     /**
      * MoveAllDrones function - Moves drones once per call
@@ -157,6 +134,7 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
         constrainPosition();
     }
 
+
     private void constrainPosition()    {
         double xMin = droneRadius;
         double xMax = sceneWidth - droneRadius;
@@ -168,31 +146,30 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
         double vx = velocity.x;
         double vy = velocity.y;
 
-        if( x < xMin) {
+        if( x < xMin) {                 // if x is less than xMin
 
-            x = xMin;
-            vx = v;
+            x = xMin;                   // x = xMin
+            vx = v;                     // vx = v
         }
-        else if( x > xMax) {
+        else if( x > xMax) {            // if x is more than xMax
 
-            x = xMax;
-            vx = -v;
+            x = xMax;                   // x == xMax
+            vx = -v;                    // vx = -v
         }
 
-        if( y < yMin) {
+        if( y < yMin) {                 // If y coordinate is less than the y Min (intersection another drones space I assume)
 
-            y = yMin;
-            vy = v;
+            y = yMin;                   // y becomes yMin
+            vy = v;                     // vy becomes v
         }
-        else if( y > yMax) {
+        else if( y > yMax) {            // If y coordinate is more than the y Max then
 
-            y = yMax;
-            vy = -v;
+            y = yMax;                   // y coordinate reset to yMax
+            vy = -v;                    // velocity y = -v
         }
     }
 
     public void updateUI() {
-
         setCenterX(location.x);
         setCenterY(location.y);
     }
