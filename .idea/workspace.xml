@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hs_err_pid48448.log" beforeDir="false" afterPath="$PROJECT_DIR$/hs_err_pid48448.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hs_err_pid48456.log" beforeDir="false" afterPath="$PROJECT_DIR$/hs_err_pid48456.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,20 +20,6 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2038#2263#0" expanded="true" />
-                <element signature="e#2262#2263#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.class">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
@@ -44,8 +27,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="229" column="34" lean-forward="true" selection-start-line="229" selection-start-column="34" selection-end-line="229" selection-end-column="34" />
+            <state relative-caret-position="2504">
+              <caret line="314" column="1" lean-forward="true" selection-start-line="314" selection-start-column="1" selection-end-line="314" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -56,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Vector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-65">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -65,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+            <state relative-caret-position="165">
+              <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -105,15 +88,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Vector.java" />
+        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="width" value="1440" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="720" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectView">
@@ -197,10 +180,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24964234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -209,7 +192,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.27970296" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27970296" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39851484" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -273,13 +256,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        <state relative-caret-position="107">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2038#2263#0" expanded="true" />
@@ -288,24 +268,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/javafx-src.zip!/javafx/geometry/Point2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.class">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+        <state relative-caret-position="165">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Vector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-65">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="229" column="34" lean-forward="true" selection-start-line="229" selection-start-column="34" selection-end-line="229" selection-end-column="34" />
+        <state relative-caret-position="2504">
+          <caret line="314" column="1" lean-forward="true" selection-start-line="314" selection-start-column="1" selection-end-line="314" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
