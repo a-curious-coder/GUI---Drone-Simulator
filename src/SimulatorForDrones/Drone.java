@@ -19,7 +19,7 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
     private static double sceneWidth = Settings.SCENE_WIDTH
                         , sceneHeight = Settings.SCENE_HEIGHT;
-    private static int nDrones = 5;                        // Number of drones
+    private static int nDrones = Settings.DRONE_COUNT;                        // Number of drones
     private static int radiusLimit = 10;                    // ----
     private static int velocityLimit = 15;
     private static int droneFlockRadius = 10;               // Flock Radius (size)
@@ -90,7 +90,7 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
      * No two drones will have same position.
      *
      */
-    /*private void setRandomLocation()    {
+    private void setRandomLocation()    {
 
         Random rnd = new Random();
         location = new Point2D(rnd.nextDouble() * sceneWidth, rnd.nextInt() * sceneHeight);   // Instantiate location// location getX() element of vector set to random value * panel width         // "" getY() with height
@@ -101,9 +101,11 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
                 if (location.getX() == drone.location.getX() && location.getY() == drone.location.getY()) {     // if location.getX() and location.getY() are equal to any other drones getX() and getY() coords
 
-                    location = (rnd.nextDouble(sceneWidth) ,rnd.nextDouble(sceneHeight));
-                    //location.getX() = rnd.nextInt(Settings.SCENE_WIDTH);                // Re-roll random getX() coordinate
-                    //location.getY() = rnd.nextInt(Settings.SCENE_HEIGHT);              // Re-roll random getY() coordinate
+                    double x = rnd.nextDouble() * sceneWidth;
+                    double y = rnd.nextDouble() * sceneHeight;
+
+                    location = new Point2D(x ,y);
+                                // Re-roll random getY() coordinate
                 } else {
 
                     return;                                             // Exit function as getX() and getY() coordinates are unique
@@ -111,7 +113,7 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
             }
         }
 
-    }*/
+    }
 
     /**
      * MoveAllDrones function - Moves drones once per call
@@ -126,20 +128,21 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
             Point2D rule1 = Cohesion(drone);
             Point2D rule2 = Separation(drone);
             Point2D rule3 = Alignment(drone);
+
             System.out.println("Rule 1 = " + rule1.getX() + " " + rule1.getY() + "\t" +
                                "Rule 2 = " + rule2.getX() + " " + rule2.getY() + "\t" +
                                "Rule 3 = " + rule3.getX() + " " + rule3.getY());
             // Adds values to velocity vector
-            drone.velocity.add(rule1);
+            drone.velocity = drone.velocity.add(rule1)
+                                           .add(rule2)
+                                           .add(rule3);
             System.out.println("drone.velocity + rule1 = " + drone.velocity.getX() + " " + drone.velocity.getY());
-            drone.velocity.add(rule2);
             System.out.println("drone.velocity + rule2 = " + drone.velocity.getX() + " " + drone.velocity.getY());
-            drone.velocity.add(rule3);
             System.out.println("drone.velocity + rule3 = " + drone.velocity.getX() + " " + drone.velocity.getY());
             //limitVelocity();
 
             // Adds velocity vector to the location vector
-            drone.location.add(velocity);
+            drone.location = drone.location.add(velocity);
             System.out.println("drone.location + velocity = " + drone.location.getX() + " " + drone.location.getY());
             //constrainPosition();
         }
@@ -216,25 +219,21 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
     private Point2D Cohesion(Drone drone)  {
 
         Point2D pc = new Point2D(0, 0); // perceived center, instantiated.
-
         for (Drone neighbour : Drones)    {             // For each drone in Drones ArrayList
 
-            if (drone == neighbour)                     // if Drone is NOT equal to any other drone
+            if (neighbour != drone)                     // if Drone is NOT equal to any other drone
                 continue;
-
-                pc.add(neighbour.location);             // Add all drone location vectors.
-
+               pc = pc.add(neighbour.location);             // Add all drone location vectors
         }
 
         if(Drones.size() > 1)   {
-            double div = 1d / (Drones.size() - 1);      // Divide by number of drones - 1 (averages the overall perceived center value and finds the general center value)
-            pc.multiply(div);                           //
+            double div = 1d/(Drones.size() - 1);// Divide by number of drones - 1 (averages the overall perceived center value and finds the general center value)
+            pc = pc.multiply(div);                           //
         }
-        System.out.println( pc.getX() + " " + pc.getY());
-        pc.subtract(drone.location);
-        System.out.println("pc.subtract(drone.location) = " + pc.getX() + " " + pc.getY());
-        pc.multiply(0.01);
-        System.out.println("Cohesion function value before return: " + pc.getX() + pc.getY());
+        pc = pc.subtract(drone.location);
+        pc = pc.multiply(0.01);
+
+        System.out.println("Cohesion:\t" + pc);
         return pc;  // new perceived center
     }
 
@@ -250,17 +249,17 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
         for (Drone neighbour : Drones)  {
 
-            if (drone.equals(neighbour)) {                  // if Drone is NOT equal to any other drone
+            if (neighbour != drone) {                  // if Drone is NOT equal to any other drone
 
                 if(isClose(drone.location)) {
 
                     //Point2D sub = new Point2D(drone.location);
-                    neighbour.location.subtract(drone.location);
-                    pc.subtract(neighbour.location);
+                    neighbour.location = neighbour.location.subtract(drone.location);
+                    pc = pc.subtract(neighbour.location);
                 }
             }
         }
-        System.out.println("Separation function value before return: " + pc.getX() + pc.getY());
+        System.out.println("Separation:\t" + pc);
         return pc;
     }
 
@@ -278,31 +277,33 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
             if(drone.equals(neighbour)) {
 
-                pv.add(neighbour.velocity);
+                pv = pv.add(neighbour.velocity);
             }
         }
 
         if(Drones.size() > 1)   {
             double div = 1d / (Drones.size() - 1);
-            pv.multiply(div);
+            pv = pv.multiply(div);
         }
 
-        pv.subtract(drone.velocity);
-        pv.multiply(0.125);
+        pv = pv.subtract(drone.velocity);
+        pv = pv.multiply(0.125);
 
-        System.out.println("Alignment function value before return: " + pv.getX() + pv.getY());
+        System.out.println("Alignment:\t" + pv);
         return pv;
     }
 
     /*private void limitVelocity() {
-        if (velocity.length() > velocityLimit) {
 
-            velocity.divide(velocity.length());
+        double v = Math.sqrt(velocity.getX() * velocity.getX() + velocity.getY() * velocity.getY());
+        if (v > velocityLimit) {
+
+            velocity.divide(v);
             velocity.multiply(velocityLimit);
         }
-    }
+    }*/
 
-
+    /*
     private boolean isInDroneFlock(final Point2D loc) {
 
         Point2D range = new Point2D(location);
@@ -314,7 +315,8 @@ public class Drone extends Circle{ // Drone extends circle attributes - represen
 
     private boolean isClose(final Point2D loc) {
         Point2D range = new Point2D(location.getX(), location.getY());
-        range.subtract(loc);                                             // Subtracts location vector passed from range
-        return (range.getX() * range.getX() + range.getY() * range.getY()) < radiusLimit;
+        range = range.subtract(loc);                                             // Subtracts location vector passed from range
+        double v = Math.sqrt(range.getX() * range.getX() + range.getY() * range.getY());
+        return v < radiusLimit;
     }
 }
