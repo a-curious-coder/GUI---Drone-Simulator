@@ -48,8 +48,7 @@ public class Main extends Application {
 
         // Adds drones to arena on GUI
         arena.getChildren().addAll(Drone.Drones);
-        Drone.Drones.forEach(Drone::MoveDrone);
-        Drone.Drones.forEach(Drone::updateUI);
+
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
