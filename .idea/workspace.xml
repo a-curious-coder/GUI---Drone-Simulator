@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/videos/Trial 2.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/videos/Trial 3.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/jscience-4.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videos/Screen Recording 2020-01-08 at 17.10.22.mov" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,19 +27,30 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.class">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2308#2533#0" expanded="true" />
+                <element signature="e#2532#2533#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="285" column="2" selection-start-line="285" selection-start-column="2" selection-end-line="285" selection-end-column="2" />
+            <state relative-caret-position="241">
+              <caret line="311" column="25" lean-forward="true" selection-start-line="311" selection-start-column="25" selection-end-line="311" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#486#493#0" expanded="true" />
+                <element signature="e#11326#11333#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -37,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
+            <state relative-caret-position="111">
+              <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -68,6 +90,13 @@
       <find>randomColor</find>
       <find>dr</find>
       <find>droneMinDistance</find>
+      <find>drone</find>
+      <find>ArrayList</find>
+      <find>cohesio</find>
+      <find>y =</find>
+      <find>pc</find>
+      <find>separation</find>
+      <find>separat</find>
     </findStrings>
     <replaceStrings>
       <replace>droneID</replace>
@@ -83,9 +112,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Vector.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" />
+        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" />
       </list>
     </option>
@@ -99,6 +128,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -121,13 +151,17 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
   </component>
   <component name="RunDashboard">
@@ -179,7 +213,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2274678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -188,16 +222,16 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27970296" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39851484" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39125" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3975" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32920793" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32875" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32920793" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32875" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -208,7 +242,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2274678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -217,7 +251,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27970296" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27875" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39851484" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -252,25 +286,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2038#2263#0" expanded="true" />
-            <element signature="e#2262#2263#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/javafx-src.zip!/javafx/geometry/Point2D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Vector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -281,19 +296,46 @@
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.class">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/javafx-src.zip!/javafx/geometry/Point2D.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
+          <folding>
+            <element signature="e#846#847#0" expanded="true" />
+            <element signature="e#870#871#0" expanded="true" />
+            <element signature="e#1073#1074#0" expanded="true" />
+            <element signature="e#1097#1098#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="48" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
+        <state relative-caret-position="111">
+          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2308#2533#0" expanded="true" />
+            <element signature="e#2532#2533#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="285" column="2" selection-start-line="285" selection-start-column="2" selection-end-line="285" selection-end-column="2" />
+        <state relative-caret-position="241">
+          <caret line="311" column="25" lean-forward="true" selection-start-line="311" selection-start-column="25" selection-end-line="311" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#486#493#0" expanded="true" />
+            <element signature="e#11326#11333#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -301,9 +343,76 @@
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>

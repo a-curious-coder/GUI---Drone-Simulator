@@ -16,6 +16,7 @@ Checklist at the bottom...
 - [x] Create Drone Java File
 - [x] Create Main Java File
 - [x] Create Settings Java File
-- [ ] Draw Drones to Scene in the GUI window
-- [ ] Store Drones in LinkedList
-- [ ] Set Drones in LinkedList to random locations when program starts
+- [x] Draw Drones to Scene in the GUI window
+	- [x] Get Drones to move
+- [x] Store Drones in LinkedList
+- [x] Set Drones in LinkedList to random locations when program starts

@@ -1,14 +1,19 @@
 package SimulatorForDrones;
 
 // JavaFX Libraries
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
+import javafx.application.Application;
+import javafx.animation.AnimationTimer;
+// JavaFX Menu Libraries
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +21,10 @@ import java.util.Random;
 
 public class Main extends Application {
 
-    private static List<Drone> Drones = Drone.Drones;
-    int sceneWidth = Settings.SCENE_WIDTH;
-    int sceneHeight = Settings.SCENE_HEIGHT;
-    Color sceneColour = Settings.BACKGROUND_COLOR;
+    private int sceneWidth = Settings.SCENE_WIDTH;
+    private int sceneHeight = Settings.SCENE_HEIGHT;
+    private Color sceneColour = Settings.BACKGROUND_COLOR;
 
-    Pane arena;
     /**
      *
      * @param primaryStage   - Applies these attribute settings to the stage it's given
@@ -29,21 +32,24 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
 
-        BorderPane root = new BorderPane();                                         // Create container
+        MenuBar menuBar = new MenuBar();
+        VBox vbox = new VBox(menuBar);
 
-        arena = new Pane();                                                         // arena for our drones
+        BorderPane root = new BorderPane();                                         // Create container
+        root.setStyle("-fx-background-color: transparent;");                        // Sets border-pane background colour to transparent to allow scene colour to display
+
+        Pane arena = new Pane();                                                    // arena for our drones
         arena.setPrefSize(sceneWidth, sceneHeight);                                 // set size for arena
 
         root.setCenter(arena);                                                      // set layerPane to center of borderPane 'root'
 
         Scene scene = new Scene(root, sceneWidth, sceneHeight, sceneColour);        // defines settings for scene
 
-
         primaryStage.setTitle("Drone Simulator");                                   // set window title
         primaryStage.setScene(scene);                                               // Sets scene for stage
         primaryStage.show();                                                        // Shows stage.
 
-        // Creates drones, adds them to 'Drones' ArrayList
+        // Creates drones, adds them to 'Drones' LinkedList
         Drone.initialiseDrones();
 
         // Adds drones to arena on GUI

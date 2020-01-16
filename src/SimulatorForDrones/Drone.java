@@ -7,23 +7,24 @@ import javafx.geometry.Point2D;
 
 // Java Libraries
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
 public class Drone extends Circle   { // Drone extends circle attributes - represented by circle.
 
-    static List <Drone> Drones;   // ArrayList to hold all 'Drone' objects - Group of Drones
+    static List <Drone> Drones = new LinkedList<Drone>();   // LinkedList to hold all 'Drone' objects - Group of Drones
     static Random rnd = new Random();
 
     private static double initialVelocity = Settings.DRONE_INITIAL_VELOCITY;
     private static double sceneHeight = Settings.SCENE_HEIGHT;
     private static double sceneWidth = Settings.SCENE_WIDTH;
-    private static int nDrones = Settings.DRONE_COUNT;                        // Number of drones
-    private double droneRadius = Settings.DRONE_MASS;                         // Creates mass variable
+    private static int nDrones = Settings.DRONE_COUNT;
+    private double droneRadius = Settings.DRONE_MASS;
     private static Color color = randomColour();                              // public = different colours   -   private static = same colour, random everytime
     private static int droneFlockRadius = 10;                                 // Flock Radius (size)
-    private static int velocityLimit = 1000;                                  // ----
-    private static int radiusLimit = 100;                                     // ----
+    private static double velocityLimit = Settings.DRONE_MAX_SPEED;
+    private static int radiusLimit = 1;                                       // ----
     private int droneID;                                                      // Holds the ID for drone - for printing information
     private double v;                                                         // v holds the individual value for velocity.
 
@@ -64,23 +65,23 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     }
 
     /**
-     * Generates number of drones and stores them to Drones ArrayList
+     * Generates number of drones and stores them to Drones LinkedList
      * Generates random variables as suitable parameters for the Drone constructor
      * x and y values are generated to remain within the parameters of the scene in the GUI
      *
      */
     public static void initialiseDrones()  {
 
-    Drones = new ArrayList<>();
+    Drones = new LinkedList<Drone>();
 
        for (int i = 0; i < nDrones; i++) {
 
             // Setting Random Positions
-            double x = rnd.nextDouble() * sceneWidth;
-            double y = rnd.nextDouble() * sceneHeight;
-            //double x = setRandomLocation().getX();                     - Something I'm working on
-            //double y = setRandomLocation().getY();
-
+            Point2D loc = setRandomLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            int droneCounter = i + 1;
+            System.out.println("Drone " + droneCounter + "\tX: " + new DecimalFormat("0.00") .format(x) + "     Y: " + new DecimalFormat("0.00") .format(y));
             // Random velocity, based on initial velocity
             double v = Math.random() * 4 + initialVelocity;              // 1d = initial velocity
 
@@ -99,27 +100,22 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     public static Point2D setRandomLocation()    {
 
         Random rnd = new Random();
-        Point2D loc = new Point2D(rnd.nextDouble() * sceneWidth, rnd.nextInt() * sceneHeight);   // Instantiate location// location getX() element of vector set to random value * panel width         // "" getY() with height
+        Point2D loc = new Point2D(rnd.nextInt((int)sceneWidth), rnd.nextInt((int)sceneHeight));   // Instantiate location
 
-        while(true) {
 
             for (Drone neighbour : Drones) {
 
                 if (loc.getX() == neighbour.location.getX() && loc.getY() == neighbour.location.getY()) {     // if location.getX() and location.getY() are equal to any other drones getX() and getY() coords
 
-                    double x = rnd.nextDouble() * sceneWidth;
-                    double y = rnd.nextDouble() * sceneHeight;
+                    double x = rnd.nextInt((int)sceneWidth);
+                    double y = rnd.nextInt((int)sceneHeight);
 
-                    loc = new Point2D(x ,y);
-                                // Re-roll random getY() coordinate
-                } else {
-
-                    break;                                             // Exit function as getX() and getY() coordinates are unique
+                    loc = new Point2D(x, y);
+                    // Re-roll random x and y coordinate
                 }
             }
-            return loc;
-        }
 
+            return loc;
     }
 
     /**
@@ -131,20 +127,21 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         Point2D rule1 = Cohesion(this);
         Point2D rule2 = Separation(this);
         Point2D rule3 = Alignment(this);
-
+        Point2D rule4 = bound_position(this);
 
             // Adds values to velocity vector
         velocity = velocity
                 .add(rule1)
                 .add(rule2)
                 .add(rule3)
+                .add(rule4)
                 ;
 
         limitVelocity();
 
         // Adds velocity vector to the location vector
         location = location.add(velocity);
-           
+
         constrainPosition(this);    // Sets constraints to how far out the drones can move - cannot move outside scene
     }
 
@@ -158,9 +155,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     private void constrainPosition(Drone drone)    {
 
         double xMin = droneRadius;
-        double xMax = sceneWidth - droneRadius;
+        double xMax = sceneWidth;
         double yMin = droneRadius;
-        double yMax = sceneHeight - droneRadius;
+        double yMax = sceneHeight;
 
         double x = drone.location.getX();
         double y = drone.location.getY();
@@ -196,9 +193,59 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     }
 
     /**
+     * Due to limitations of Point2D library, you cannot individually set X and Y values, only both.
+     * The issue here is that if y is holding a value and you want to only set X, you need to reset the Y value.
+     * This function stores the Y value and sets x whilst passing the stored y value - maintaining all values necessary
+     *
+     * @param v     The vector being passed in
+     * @param n     The number that's going to be used in setting the x value
+     * @return      Vector containing values
+     */
+    private Point2D setX(Point2D v, double n)  {
+       double y  = v.getY();    // Stores the Y value of the Point2D vector
+       v = new Point2D(n, y);
+       return v;
+    }
+
+    /**
+     * ""
+     * @param v     ""
+     * @param n     ""
+     * @return      Vector containing values
+     */
+    private Point2D setY(Point2D v, double n)  {
+        double x  = v.getX();    // Stores the Y value of the Point2D vector
+        v = new Point2D(x, n);
+        return v;
+    }
+
+
+
+    private Point2D bound_position(Drone drone)    {
+        double xMin = droneRadius, xMax = sceneWidth, yMin = droneRadius, yMax = sceneHeight;
+        int pX = 10, nX = -10, pY = 10, nY = -10;
+
+        Point2D v = new Point2D(0, 0);
+
+        if(drone.location.getX() < xMin)    {
+            setX(v, pX);
+        } else if (drone.location.getX() > xMax)    {
+            setX(v, nX);
+        }
+
+        if(drone.location.getY() < yMin)    {
+            setY(v, pY);
+        } else if (drone.location.getY() > yMax)    {
+            setY(v, nY);
+        }
+
+        return v;
+    }
+
+    /**
      * updates the user interface - location x and y coordinates update for the drones - allows movement.
      */
-    public void updateUI() {
+    void updateUI() {
         setCenterX(location.getX());
         setCenterY(location.getY());
     }
@@ -212,7 +259,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         Point2D pc = new Point2D(0, 0);          // perceived center, instantiated.
 
-        for (Drone neighbour : Drones)    {             // For each drone in Drones ArrayList
+        for (Drone neighbour : Drones)    {             // For each drone in Drones LinkedList
 
             if (drone == neighbour)                     // if Drone is equal to any other drone
                 continue;
@@ -221,12 +268,13 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         }
 
         if(Drones.size() > 1)   {
-            double div = 1d/(Drones.size() - 1);        // Divide by number of drones - 1 (averages the overall perceived center value and finds the general center value)
-            pc = pc.multiply(div);                           //
+            //double div = 1d/(Drones.size() - 1);        // Divide by number of drones - 1 (averages the overall perceived center value and finds the general center value)
+            //pc = pc.multiply(div);                           //
+            Point2D_Div(pc, Drones.size()-1);
         }
         pc = pc.subtract(drone.location).multiply(0.01);
 
-        //System.out.println("Cohesion:\t" + pc);
+        System.out.println("Cohesion:\t" + "\tX: " + new DecimalFormat("0.00") .format(pc.getX()) + "    Y:" + new DecimalFormat("0.00") .format(pc.getY()));
         return pc;  // new perceived center
     }
 
@@ -242,16 +290,27 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         for (Drone neighbour : Drones) {
 
-            if (drone == neighbour)                   // if Drone is NOT equal to any other drone
-                continue;
+            if (neighbour.location != drone.location) {
 
-            if ((neighbour.location.getX() - drone.location.getX()) < 100 && (neighbour.location.getY() - drone.location.getY()) < 100) {
-                pc = pc.subtract(neighbour.location.subtract(drone.location));
+                double x = (neighbour.location).getX() - drone.location.getX();
+                double y = (neighbour.location).getY() - drone.location.getY();
+                double v = x + y;
+                System.out.println("x" + " + "+ "y" + " = " + v);
+
+                Point2D n = new Point2D(x, y);
+                System.out.println("x" + " , "+ "y" + " = " + n);
+
+                if (v > 0 && v < 100) {
+
+                    System.out.println("if (v > 0 && v < 100)");
+                    System.out.println("pc  " + pc + " -  n = " + new DecimalFormat("0.00").format(n.getX()) + " + " + new DecimalFormat("0.00").format(n.getY()));
+
+                    pc = pc.subtract(n);
+                }
             }
-
-            //System.out.println("Separation:\t" + pc);
-
         }
+        System.out.println("pc:\t" + pc);
+        System.out.println("\nSeparation:\t" + "\tX: " + new DecimalFormat("0.00").format(pc.getX()) + "    Y:" + new DecimalFormat("0.00").format(pc.getY()));
         return pc;
     }
 
@@ -280,7 +339,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         pv = (pv.subtract(drone.velocity)).multiply(0.125);
 
-        //System.out.println("Alignment:\t" + pv);
+        System.out.println("Alignment:\t" + "\tX: " + new DecimalFormat("0.00") .format(pv.getX()) + "    Y:" + new DecimalFormat("0.00") .format(pv.getY()));
         return pv;
     }
 /*
@@ -326,10 +385,50 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         }
     }
 
+    /**
+     *  flock is a group of drones that move according to 3 rules
+     *  can be multiple flocks
+     * @return  drones within the specific flock
+     */
+    public List<Drone> flock()  {
+        List<Drone> flock = new LinkedList<Drone>();
+            for(Drone drone : Drones)   {
+                if(isInFlock(drone.location))   {
+                    flock.add(drone);
+                }
+            }
+            return flock;
+    }
+
+    /**
+     * Checks whether drone is within flock area
+     * @param loc   location of drone
+     * @return  ??
+     */
+    private boolean isInFlock(Point2D loc)  {
+        Point2D range = new Point2D(location.getX(), location.getY());
+        range.subtract(loc);
+        return range.magnitude() < droneFlockRadius;
+    }
 
     private boolean isClose(Point2D location) {
         Point2D range = new Point2D(location.getX(), location.getY());
         range = range.subtract(location);                                             // Subtracts location vector passed from range
+        //System.out.println("range.magnitude() < radiusLimit\t" + range.magnitude() + " < " + radiusLimit);
+        if(range.magnitude() < radiusLimit) {
+            //System.out.println("true");
+            return true;
+        }
         return range.magnitude() < radiusLimit;
+    }
+
+    private Point2D Point2D_Div(Point2D v1, int A)  {
+        Point2D v = new Point2D(0,0);
+        double vX = v.getX();
+        double vY = v.getY();
+        setX(v, v1.getX() / A);
+        setY(v, v1.getY() / A);
+
+        return v;
     }
 }

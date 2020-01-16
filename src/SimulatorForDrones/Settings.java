@@ -7,13 +7,13 @@ public class Settings {
     public static int SCENE_WIDTH = 600;
     public static int SCENE_HEIGHT = 500;
 
-    public final static Color BACKGROUND_COLOR = Color.GRAY;
+    public final static Color BACKGROUND_COLOR = Color.BLACK;
 
-    public static int DRONE_COUNT = 25;
-    public static double DRONE_MASS = 5;
-    public static double DRONE_MAX_SPEED = 20.00;
+    public static int DRONE_COUNT = 20; // Number of drones
+    public static double DRONE_MASS = 5; // Creates mass variable
+    public static double DRONE_MAX_SPEED = 5;  // Velocity only increases, this restricts it from surpassing this value.
     public static double DRONE_MIN_DISTANCE = DRONE_MASS * 2d * 5; // 1 == arbitrary val
-    public static double DRONE_INITIAL_VELOCITY = 1d;
+    public static double DRONE_INITIAL_VELOCITY = 1d;       // Gives each drone a base velocity as a minimum to start from.
 
     // ensure that attraction is applied with at least min and max
     // we don't want it to be too weak or too strong
