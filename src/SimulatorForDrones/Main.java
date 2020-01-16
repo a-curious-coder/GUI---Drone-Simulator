@@ -3,6 +3,8 @@ package SimulatorForDrones;
 // JavaFX Libraries
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -35,6 +37,8 @@ public class Main extends Application {
         MenuBar menuBar = new MenuBar();
         VBox vbox = new VBox(menuBar);
 
+        final ContextMenu contextMenu = new ContextMenu();
+
         BorderPane root = new BorderPane();                                         // Create container
         root.setStyle("-fx-background-color: transparent;");                        // Sets border-pane background colour to transparent to allow scene colour to display
 
@@ -45,6 +49,20 @@ public class Main extends Application {
 
         Scene scene = new Scene(root, sceneWidth, sceneHeight, sceneColour);        // defines settings for scene
 
+        scene.setOnMouseClicked(e -> {
+            if(e.getButton() == MouseButton.SECONDARY) {
+                Drone.Drones.clear();
+                Drone.initialiseDrones();
+            }
+            if(e.getButton() == MouseButton.PRIMARY) {
+                arena.getChildren().removeAll(Drone.Drones);
+                Drone.Drones.clear();
+
+                Drone.initialiseDrones();
+                arena.getChildren().addAll(Drone.Drones);
+            }
+        });
+
         primaryStage.setTitle("Drone Simulator");                                   // set window title
         primaryStage.setScene(scene);                                               // Sets scene for stage
         primaryStage.show();                                                        // Shows stage.
@@ -54,6 +72,7 @@ public class Main extends Application {
 
         // Adds drones to arena on GUI
         arena.getChildren().addAll(Drone.Drones);
+
 
         AnimationTimer loop = new AnimationTimer() {
 
