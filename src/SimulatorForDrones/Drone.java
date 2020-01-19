@@ -3,10 +3,9 @@ package SimulatorForDrones;
 // JavaFX Libraries
 import javafx.scene.paint.Color;  // Colour library
 import javafx.scene.shape.Circle; // Imports Circle library and allows me to represent a drone with the circle.
-import javafx.geometry.Point2D;
+import javafx.scene.transform.Rotate;
 
 // Java Libraries
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
 
@@ -21,14 +20,22 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     private static int numberOfDrones = Settings.DRONE_COUNT;
     private static double droneRadius = Settings.DRONE_MASS;
     private static Color color = Settings.DRONE_COLOR;                        // public = different colours   -   private static = same colour, random everytime
-    private static int droneFlockRadius = 1000;                                 // Flock Radius (size)
+    private static int droneFlockRadius = 100;                                 // Flock Radius (size)
     private static double minVelocity = -5, maxVelocity = 5;
     private double maxForce = Settings.DRONE_MAX_FORCE;
     private double maxSpeed = Settings.DRONE_MAX_SPEED;
 
-    public Point2D location;                                                 // Stores X and Y coordinates for drone
-    private Point2D velocity;                                                 // Determines speed of drone - helps with next location
-    private Point2D acceleration;
+    private double desiredSeparationRadius;
+    private Rotate rotationTransform;
+    private int cohesionTotal;
+    private int separationTotal;
+    private int alignmentTotal;
+    private double COHESION_WEIGHT = Settings.COHESION_WEIGHT;
+    private double SEPARATION_WEIGHT = Settings.SEPARATION_WEIGHT;
+    private double ALIGNMENT_WEIGHT = Settings.ALIGNMENT_WEIGHT;
+
+    public Point location;                                                 // Stores X and Y coordinates for drone
+    private Point velocity;                                                 // Determines speed of drone - helps with next location
 
     /**
      *
@@ -37,19 +44,14 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * @param v     V is the velocity of the drone
      *
      */
-    public Drone(int droneUniqueID, double x, double y, Point2D v) {
-
-        int id = Drones.size() + 1;                // Set drone ID
-
-
-        //this.location = new Point2D(x, y);
-        this.location = new Point2D(sceneWidth/2, sceneHeight/2);
+    public Drone(int droneUniqueID, double x, double y, Point v) {
+        this.desiredSeparationRadius = droneRadius * 3;
+        this.location = new Point(x, y);
         this.velocity = v;               // Set velocity
+
         // Generate new and random magnitude for velocity
         this.velocity = this.velocity.normalize();
         this.velocity = this.velocity.multiply(rnd.nextDouble() * 4);
-
-        this.acceleration = new Point2D(0,0);
 
 
         setRadius(droneRadius);                     // Sets drone radius (mass/size)
@@ -61,13 +63,13 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
     public static void createDrone()   {
         int id = Drones.size() + 1;
-        Point2D loc = setRandomLocation();
+        Point loc = setRandomLocation();
         double x = loc.getX();
         double y = loc.getY();
 
         double vX = (Math.random() * ((maxVelocity - minVelocity) + 1)) + minVelocity;
         double vY = (Math.random() * ((maxVelocity - minVelocity) + 1)) + minVelocity;
-        Point2D velocity = new Point2D(vX, vY);
+        Point velocity = new Point(vX, vY);
 
         Drone drone = new Drone(id, x, y, velocity);
         Drones.add(drone);
@@ -93,27 +95,28 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      */
     public void MoveDrone()   {
 
-            Point2D rule1 = this.Cohesion(Drones);
-            Point2D rule2 = this.Separation(Drones);
-            Point2D rule3 = this.Alignment(Drones);
-            //Point2D rule4 = bound_position(this);
+            Point rule1 = this.Cohesion(Drones);
+            Point rule2 = this.Separation(Drones);
+            Point rule3 = this.Alignment(Drones);
 
             // Adds values to velocity vector
-            velocity = velocity
+
+
+            //velocity = velocity
                     //.add(rule1)       // Cohesion
-                    .add(rule2)         // Separation
+                    //.add(rule2)         // Separation
                     //.add(rule3)       // Alignment
-                    //.add(rule4)       // Boundposition
             ;
 
-            limitVelocity();
-
-            this.acceleration = this.acceleration
-                                //.add(rule1)
-                                .add(rule2)
-                                //.add(rule3)
-            ;
             edges();
+            //limitVelocity();
+
+            Point changeInVelocity = new Point (0, 0);
+            changeInVelocity = changeInVelocity.add(rule2, rule3).add(rule1);
+            //double angle = this.getVelocity().angleInDegrees();
+            //this.getRotationTransform().setAngle(angle);
+            this.setVelocity(this.getVelocity().add(changeInVelocity).limit(this.getMaxSpeed()));       // Limits maxSpeed
+            this.setLocation(this.getLocation().add(this.getVelocity()));
 
             //constrainPosition(this);    // Sets constraints to how far out the drones can move - cannot move outside scene
     }
@@ -122,21 +125,10 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * updates the user interface - location x and y coordinates update for the drones - allows movement.
      */
     void updateUI() {
-        // Adds velocity vector to the location vector
-        this.location = this.location.add(this.velocity);
-        this.velocity = this.velocity.add(this.acceleration);
 
-        if(this.velocity.magnitude() > maxSpeed)   {    // Limits velocity to maxSpeed
-            this.velocity.normalize();
-            this.velocity.multiply(this.maxSpeed);
-        }
-        // After finishing updating the velocity, reset acceleration for next boid
+        this.setLayoutX(this.getLocation().getX());
+        this.setLayoutY(this.getLocation().getY());
 
-        setCenterX(location.getX());
-        setCenterY(location.getY());
-        this.acceleration = this.acceleration.multiply(0);
-
-        //Cohesion(Drones).multiply(Main.cohesionSlider.getValue());
     }
 
 
@@ -145,45 +137,28 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * Searches for a perceived center in a 'flock' of drones.
      * @return return newly calculated perceived center
      */
-    private Point2D Cohesion(List<Drone> Drones)  {
+    private Point Cohesion(List<Drone> Drones) {
 
-        Point2D pc = new Point2D(0, 0);          // perceived center, instantiated.
-        int total = 0;
+        cohesionTotal = 0;
+        Point pc = new Point(0, 0);          // perceived center, instantiated.
+        for(Drone drone : Drones) {
+            for (Drone neighbour : Drones) {             // For each drone in Drones LinkedList
 
-        for (Drone neighbour : Drones) {             // For each drone in Drones LinkedList
-
-            // Calculate distance between drone location and neighbour location
-            Point droneLoc = new Point(this.location.getX(), this.location.getY());
-            Point neighbourLoc = new Point(neighbour.location.getX(), neighbour.location.getY());
-            double d = droneLoc.distanceTo(neighbourLoc);
-
-            if (neighbour.location != this.location && d < droneFlockRadius && d > droneRadius) {
+                if (neighbour.equals(drone)) continue;
 
                 // pc + neighbour location for the purpose of steering toward this location
                 pc = pc.add(neighbour.location);
-                total++;
-            }
-        }
-
-        if(total > 0)   {
-
-            Point2D_Div(pc, total);
-
-            pc = pc.subtract(this.location);
-            // Setting magnitude to desired velocity - maxSpeed
-            pc = pc.normalize();
-            pc = pc.multiply(maxSpeed);
-            // Subtract current velocity
-            pc = pc.subtract(this.velocity);
-
-            if(pc.magnitude() > maxForce) {
-                // Setting the magnitude of pc - library lacks function to do so, had to manually calculate.
-                pc.normalize();
-                pc.multiply(maxForce);
+                cohesionTotal++;
             }
 
+            if (cohesionTotal > 0) {
+
+                pc = pc.divide(cohesionTotal);
+                pc = drone.steer(pc);
+            }
         }
-        //System.out.println("Cohesion:\t" + pc);
+        pc = pc.multiply(COHESION_WEIGHT);
+        //System.out.println("Cohesion:\t[" + pc.getX() + ", " + pc.getY() + "]");
         return pc;  // new perceived center
     }
 
@@ -193,40 +168,33 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      *
      * @return return perceived center
      */
-    private Point2D Separation(List<Drone> Drones) {
+    private Point Separation(List<Drone> Drones) {
 
-        Point2D pc = new Point2D(0, 0);
-        int total = 0;
-        for (Drone neighbour : Drones) {
+        Point pc = new Point(0, 0);
 
-            Point droneLoc = new Point(this.location.getX(), this.location.getY());
-            Point neighbourLoc = new Point(neighbour.location.getX(), neighbour.location.getY());
-            double d = droneLoc.distanceTo(neighbourLoc);
+        for (Drone drone : Drones) {
 
-            if (neighbour != this && d < droneFlockRadius && d > droneRadius) {
+            for (Drone neighbour : Drones) {
 
-                    Point2D diff = this.location.subtract(neighbour.location);
-                    diff = Point2D_Div(diff, d);
-                    pc = pc.add(diff);
-                    total++;
-            }
-            if(total > 0)   {
-                // divide pc by total
-                pc = Point2D_Div(pc, total);
-                // Set magnitude to maxSpeed
-                pc = pc.normalize();
-                pc = pc.multiply(maxSpeed);
-                //
-                pc = pc.subtract(this.velocity);
+                if (neighbour.equals(drone)) continue;
 
-                if(pc.magnitude() > maxForce)  {    // Limits the magnitude of pc to maxForce valuek
-                    pc = pc.normalize();
-                    pc = pc.multiply(maxForce);
+                double d = drone.getLocation().distanceTo(neighbour.getLocation());
+
+                if (d <= drone.getDesiredSeparationRadius()) {
+
+                    pc = pc.add(pc.subtract(drone.getLocation(), neighbour.getLocation()).normalize().divide(d));
+                    separationTotal++;
                 }
+
             }
+
+            if (separationTotal > 0) {
+                // divide pc by total
+                pc = pc.divide(separationTotal);
+            }
+            pc.multiply(SEPARATION_WEIGHT);
         }
-        pc = pc.multiply(0.125); // Weighting
-        //System.out.println("\nSeparation:\t" + pc);
+        //System.out.println("\nSeparation:\t[" + pc.getX() + ", " + pc.getY() + "]");
         return pc;
     }
 
@@ -236,48 +204,37 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      *
      * @return perceived velocity value
      */
-    private Point2D Alignment(List<Drone> Drones) {
+    private Point Alignment(List<Drone> Drones) {
 
-        int total = 0;
-        Point2D pv = new Point2D(0, 0); // Perceived Velocity
+        Point pv = new Point(0, 0); // Perceived Velocity
 
-        for(Drone neighbour : Drones)   {
+        for(Drone drone : Drones) {
 
-            Point droneLoc = new Point(this.location.getX(), this.location.getY());
-            Point neighbourLoc = new Point(neighbour.location.getX(), neighbour.location.getY());
-            double d = droneLoc.distanceTo(neighbourLoc);
+            for (Drone neighbour : Drones) {
 
-            if(neighbour != this && d < droneFlockRadius && d > droneRadius) {
-                pv = pv.add(neighbour.velocity);
-                pv = pv.subtract(this.velocity);
-                total++;
+                if (neighbour.equals(drone)) continue;
+
+                pv = pv.add(neighbour.getVelocity());
+                alignmentTotal++;
+            
             }
-        }
 
-        if(total > 0)   {
-
-            total = total/100;
-            pv = pv.multiply(total);
-            //pv = pv.magnitude(); TODO: Set the magnitude to the maxSpeed value
-            pv = pv.normalize();
-            pv = pv.multiply(maxSpeed);     // Magnitude becomes max speed...
-            pv = pv.subtract(this.velocity);
-
-            if(pv.magnitude() > maxForce)  {    // Limits the magnitude of pv to maxForce valuek
-                pv = pv.normalize();
-                pv = pv.multiply(maxForce);
+            if (alignmentTotal > 0) {
+                pv = pv.divide(alignmentTotal).limit(drone.getMaxForce());
             }
+
+            pv = pv.multiply(ALIGNMENT_WEIGHT);
+            //System.out.println("\nAlignment:\t[" + pv.getX() + ", " + pv.getY() + "]");
         }
-        pv = pv.multiply(0.01); // Weighting
-        //System.out.println("\nAlignment:\t" + pv);
         return pv;
     }
 
-    private Point2D bound_position(Drone drone)    {
+
+    private Point bound_position(Drone drone)    {
         double xMin = droneRadius, xMax = sceneWidth, yMin = droneRadius, yMax = sceneHeight;
         int pX = 10, nX = -10, pY = 10, nY = -10;
 
-        Point2D v = new Point2D(0, 0);
+        Point v = new Point(0, 0);
 
         if(drone.location.getX() < xMin)    {
             setX(v, pX);
@@ -300,10 +257,10 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      *
      * @return      new location
      */
-    public Point2D edges()    {
+    public Point edges()    {
 
         Point Loc = new Point(this.location.getX(), this.location.getY());
-        int menuHeight = 0, tbHeight = 80, infoBarWidth = 205;
+        int menuHeight = 0, tbHeight = 70, infoBarWidth = 195;
         if (Loc.getX() >= sceneWidth-infoBarWidth)  {
 
             Loc.setX(0+droneRadius);
@@ -319,7 +276,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
             Loc.setY(sceneHeight-droneRadius-tbHeight);
         }
-        this.location = new Point2D(Loc.getX(), Loc.getY());
+        this.location = new Point(Loc.getX(), Loc.getY());
         return this.location;
     }
 
@@ -328,9 +285,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * No two drones will have same position.
      *
      */
-    public static Point2D setRandomLocation()    {
+    public static Point setRandomLocation()    {
 
-        Point2D loc = new Point2D(rnd.nextInt((int)sceneWidth) + droneRadius, rnd.nextInt((int)sceneHeight) + droneRadius);   // Instantiate location
+        Point loc = new Point(rnd.nextInt((int)sceneWidth) + droneRadius, rnd.nextInt((int)sceneHeight) + droneRadius);   // Instantiate location
 
 
         for (Drone neighbour : Drones) {
@@ -340,7 +297,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
                 double x = rnd.nextInt((int)sceneWidth) + droneRadius;
                 double y = rnd.nextInt((int)sceneHeight) + droneRadius;
 
-                loc = new Point2D(x, y);
+                loc = new Point(x, y);
                 // Re-roll random x and y coordinate
             }
         }
@@ -399,9 +356,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
             vy = -velocity.getY();                    // velocity getY() = -v
         }
 
-        // TODO: Find less power consuming solution: find out how to modify the vector directly or create own Point2D class
-        location = new Point2D(x, y);
-        velocity = new Point2D(vx, vy);
+        // TODO: Find less power consuming solution: find out how to modify the vector directly or create own Point class
+        location = new Point(x, y);
+        velocity = new Point(vx, vy);
 
     }
 
@@ -411,14 +368,14 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * @param loc   location of drone
      * @return  ??
      */
-    private boolean isInFlock(Point2D loc)  {
-        Point2D range = new Point2D(location.getX(), location.getY());
+    private boolean isInFlock(Point loc)  {
+        Point range = new Point(location.getX(), location.getY());
         range.subtract(loc);
         return range.magnitude() < droneFlockRadius;
     }
 
-    private boolean isClose(Point2D location) {
-        Point2D range = new Point2D(location.getX(), location.getY());
+    private boolean isClose(Point location) {
+        Point range = new Point(location.getX(), location.getY());
         range = range.subtract(location);                                             // Subtracts location vector passed from range
         //System.out.println("range.magnitude() < radiusLimit\t" + range.magnitude() + " < " + radiusLimit);
         if(range.magnitude() < droneFlockRadius) {
@@ -428,8 +385,8 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         return range.magnitude() < droneFlockRadius;
     }
 
-    private Point2D Point2D_Div(Point2D p, double A)  {
-        Point2D v = new Point2D(0,0);
+    private Point Point_Div(Point p, double A)  {
+        Point v = new Point(0,0);
 
         setX(v, p.getX() / A);
         setY(v, p.getY() / A);
@@ -445,7 +402,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     }
 
     /**
-     * Due to limitations of Point2D library, you cannot individually set X and Y values, only both.
+     * Due to limitations of Point library, you cannot individually set X and Y values, only both.
      * The issue here is that if y is holding a value and you want to only set X, you need to reset the Y value.
      * This function stores the Y value and sets x whilst passing the stored y value - maintaining all values necessary
      *
@@ -454,9 +411,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * @return      Vector containing values
      */
 
-    private Point2D setX(Point2D v, double n)  {
-        double x  = v.getX();    // Stores the Y value of the Point2D vector
-        v = new Point2D(n, x);
+    private Point setX(Point v, double n)  {
+        double x  = v.getX();    // Stores the Y value of the Point vector
+        v = new Point(n, x);
         return v;
     }
 
@@ -466,9 +423,58 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * @param n     ""
      * @return      Vector containing values
      */
-    private Point2D setY(Point2D v, double n)  {
-        double y  = v.getY();    // Stores the Y value of the Point2D vector
-        v = new Point2D(y, n);
+    private Point setY(Point v, double n)  {
+        double y  = v.getY();    // Stores the Y value of the Point vector
+        v = new Point(y, n);
         return v;
+    }
+
+    //---------------------------------------------
+    //                  Getters
+    //---------------------------------------------
+
+    public Point getLocation()  {
+        return location;
+    }
+
+    public void setLocation(Point location)  {
+        this.location = location;
+    }
+    
+    public Point getVelocity()  {
+        return velocity;
+    }
+
+    public void setVelocity(Point velocity) {
+        this.velocity = velocity;
+    }
+
+    public double getDesiredSeparationRadius()   {
+        return desiredSeparationRadius;
+    }
+
+    public double getMaxForce() {
+        return maxForce;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public Rotate getRotationTransform() {
+        return this.rotationTransform;
+    }
+
+    public Point steer(Point target) {
+        Point desired = new Point(0,0);
+        desired = desired.subtract(target, this.getLocation());
+
+        if (desired.magnitude() > 0) {
+        // Sets the magnitude to maxSpeed      
+            desired.normalize();
+            desired.multiply(maxSpeed);
+            return desired.subtract(this.getVelocity()).limit(maxForce);
+        }
+        return new Point();
     }
 }

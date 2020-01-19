@@ -3,7 +3,6 @@ package SimulatorForDrones;
 // JavaFX Libraries
 import apple.laf.JRSUIConstants;
 import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -14,6 +13,8 @@ import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 
 import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main extends Application {
 
@@ -140,6 +141,10 @@ public class Main extends Application {
         loop.start();
     }
 
+    public static List<Drone> getDrones() {
+        return Drone.Drones;
+    }
+
     private void reinitDrones(boolean changeColour) {
         if(changeColour)    {
 
@@ -199,7 +204,7 @@ public class Main extends Application {
         infoBar.getItems().addAll(droneInfo);
     }
 
-    private Point2D getLocation(Drone drone)    {
+    private Point getLocation(Drone drone)    {
         return drone.location;
     }
 }
