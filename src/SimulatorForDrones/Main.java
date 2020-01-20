@@ -2,9 +2,14 @@ package SimulatorForDrones;
 
 // JavaFX Libraries
 import apple.laf.JRSUIConstants;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -12,9 +17,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 
-import java.text.DecimalFormat;
-import java.util.LinkedList;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Optional;
 
 public class Main extends Application {
 
@@ -22,10 +28,11 @@ public class Main extends Application {
     private int sceneHeight = Settings.SCENE_HEIGHT;
     private Color sceneColour = Settings.BACKGROUND_COLOR;
 
-    private Label droneInfo, ruleInfo;
-    public static Slider cohesionSlider, separationSlider, alignmentSlider;
+    private Label droneInfo;
     private ToolBar infoBar;
     private Pane arena = new Pane();
+    private static MenuBar menuBar = new MenuBar();
+    private static GridPane controlGrid = new GridPane();
 
     /**
      *
@@ -33,6 +40,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
+        AnimationTimer loop = startAnimation();
 
         //-------------------------------------------------
         //                  Menu
@@ -41,91 +49,246 @@ public class Main extends Application {
                 Edit = new Menu("Edit"),
                 Other = new Menu("Other");
 
-        MenuItem file1 = new MenuItem("Settings"),
-                 file2 = new MenuItem("About"),
-                 file3 = new MenuItem("Help"),
-                 edit1 = new MenuItem("Cohesion"),
-                 edit2 = new MenuItem("Separation"),
-                 edit3 = new MenuItem("Alignment"),
+        MenuItem open = new MenuItem("Open"),
+                 save = new MenuItem("Save"),
+                 settings = new MenuItem("Settings"),
+                 edit1 = new MenuItem("ExampleButton1"),
+                 edit2 = new MenuItem("ExampleButton2"),
+                 edit3 = new MenuItem("ExampleButton3"),
                  other1 = new MenuItem("Other option here");
 
-        File.getItems().addAll(file1, file2, file3);
+        File.getItems().addAll(settings, open, save);
         Edit.getItems().addAll(edit1, edit2, edit3);
         Other.getItems().addAll(other1);
 
-        MenuBar menuBar = new MenuBar();
         menuBar.getMenus().addAll(File, Edit, Other);
-        //-------------------------------------------------
-        //                  Toolbar
-        //-------------------------------------------------
-        ToolBar toolBar = new ToolBar();
+
+        settings.setOnAction(ActionEvent ->
+        {
+            TextInputDialog setting = new TextInputDialog("");
+            setting.setTitle("Settings");
+            setting.setHeaderText("Simulator Settings");
+            setting.setContentText("Enter Drone Count: ");
+            Optional<String> result = setting.showAndWait();
+            result.ifPresent(droneNo -> System.out.println("Enter Drone Count" + droneNo));
+
+        });
+
+        open.setOnAction(ActionEvent ->
+        {
+
+        });
+
+        save.setOnAction(ActionEvent ->
+        {
+
+        });
+
+        //--------------------------------
+        //          GridPanes
+        //--------------------------------
+
+        GridPane sliderGrid = new GridPane();
+        sliderGrid.setPrefSize(800, 100);
+        GridPane buttonGrid = new GridPane();
+        sliderGrid.setPrefSize(800, 50);
+
+        //--------------------------------
+        //          Button GridPane
+        //--------------------------------
         Button start = new Button("Start"),
                 stop = new Button("Stop"),
                 reset = new Button("Reset Animation"),
-                init = new Button("Initialise Drones");
+                clear = new Button("Clear Drones"),
+                init = new Button("Initialise Drones"),
+                changeColour = new Button("Change Drone Colours"),
+                addDrone = new Button("Add Drone"),
+                addPredator = new Button("Add Predator"),
+                addObstacle = new Button("Add Obstacle");
+        // set button width
+        start.setMinWidth(sceneWidth/3);
+        stop.setMinWidth(sceneWidth/3);
+        reset.setMinWidth(sceneWidth/3);
+        clear.setMinWidth(sceneWidth/3);
+        init.setMinWidth(sceneWidth/3);
+        changeColour.setMinWidth(sceneWidth/3);
+        addDrone.setMinWidth(sceneWidth/3);
+        addPredator.setMinWidth(sceneWidth/3);
+        addObstacle.setMinWidth(sceneWidth/3);
 
-        cohesionSlider = new Slider(0, 1, 0.5);
-        cohesionSlider.setPrefWidth(200d);
-        cohesionSlider.setOrientation(Orientation.HORIZONTAL);
-        cohesionSlider.setLayoutX(500);
-        cohesionSlider.setLayoutY(500);
-        separationSlider = new Slider(0, 1, 0.5);
-        alignmentSlider = new Slider(0, 1, 0.5);
 
         start.setOnAction(ActionEvent ->
         {
-            System.out.println("Start");
-        });
-        stop.setOnAction(ActionEvent ->
-        {
-            System.out.println("Stop");
-        });
-        reset.setOnAction(ActionEvent ->
-        {
-            reinitDrones(false);
+            loop.start();
         });
 
-        toolBar.getItems().addAll(start, stop, reset);
+        stop.setOnAction(ActionEvent ->
+        {
+            loop.stop();
+        });
+
+        reset.setOnAction(ActionEvent ->
+        {
+            reinitDrones(true);
+        });
+
+        clear.setOnAction(ActionEvent ->
+        {
+            clearDrones();
+
+        });
+
+        init.setOnAction(ActionEvent ->
+        {
+
+        });
+
+        changeColour.setOnAction(ActionEvent ->
+        {
+            changeColour();
+        });
+
+        addDrone.setOnAction(ActionEvent ->
+        {
+            Drone drone = Drone.createDrone();
+            arena.getChildren().add(drone);
+        });
+
+        addPredator.setOnAction(ActionEvent ->
+        {
+
+        });
+
+        addObstacle.setOnAction(ActionEvent ->
+        {
+
+        });
+
+        buttonGrid.add(start, 0,0);
+        buttonGrid.add(stop, 0,1);
+        buttonGrid.add(reset, 0,2);
+
+        buttonGrid.add(clear, 1,0);
+        buttonGrid.add(init, 1, 1);
+        buttonGrid.add(changeColour, 1, 2);
+
+        buttonGrid.add(addDrone, 2,0);
+        buttonGrid.add(addPredator, 2,1);
+        buttonGrid.add(addObstacle, 2,2);
+
+
+        //--------------------------------
+        //          Slider Grid
+        //--------------------------------
+
+        // Setting constraints
+        // Cohesion Slider -----------
+        Label cohesionLabel = new Label("Cohesion weight");
+        cohesionLabel.setMinWidth(Settings.SCENE_WIDTH/3);
+        cohesionLabel.setAlignment(Pos.CENTER);
+        Slider cohesionSlider = new Slider(0, 10, Drone.COHESION_WEIGHT);
+        cohesionSlider.setMaxWidth(Settings.SCENE_WIDTH/3 - 30);
+        cohesionSlider.setBlockIncrement(0.1);
+        cohesionSlider.setStyle("-fx-padding: 10px");
+        final Label cohesionValue = new Label(Double.toString(cohesionSlider.getValue()));
+        cohesionValue.setAlignment(Pos.CENTER);
+        sliderGrid.add(cohesionLabel, 1, 0);
+        sliderGrid.add(cohesionSlider, 1, 1);
+        sliderGrid.add(cohesionValue, 1, 2);
+
+        cohesionSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                Drone.COHESION_WEIGHT = newVal.doubleValue();
+                cohesionValue.setText(String.format("%.1f", newVal));
+            }
+        });
+
+
+        // Separation Slider -----------
+        Label separationLabel = new Label("Separation weight");
+        separationLabel.setMinWidth(Settings.SCENE_WIDTH/3);
+        separationLabel.setAlignment(Pos.CENTER);
+        Slider separationSlider = new Slider(0, 10, Drone.SEPARATION_WEIGHT);
+        separationSlider.setMaxWidth(Settings.SCENE_WIDTH/3 - 30);
+        separationSlider.setBlockIncrement(0.1);
+        separationSlider.setStyle("-fx-padding: 10px");
+        final Label separationValue = new Label(Double.toString(separationSlider.getValue()));
+        separationValue.setAlignment(Pos.CENTER);
+        sliderGrid.add(separationLabel, 3, 0);
+        sliderGrid.add(separationSlider, 3, 1);
+        sliderGrid.add(separationValue, 3, 2);
+
+        separationSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                Drone.SEPARATION_WEIGHT = newVal.doubleValue();
+                separationValue.setText(String.format("%.1f", newVal));
+            }
+        });
+
+
+        // Alignment -----------
+        Label alignmentLabel = new Label("Alignment weight");
+        alignmentLabel.setMinWidth(Settings.SCENE_WIDTH/3 - 30);
+        alignmentLabel.setAlignment(Pos.CENTER);
+        Slider alignmentSlider = new Slider(0, 10, Drone.ALIGNMENT_WEIGHT);
+        alignmentSlider.setMaxWidth(Settings.SCENE_WIDTH/3);
+        alignmentSlider.setBlockIncrement(0.1);
+        final Label alignmentValue = new Label(Double.toString(alignmentSlider.getValue()));
+        alignmentSlider.setStyle("-fx-padding: 10px");
+        alignmentValue.setAlignment(Pos.CENTER);
+        sliderGrid.add(alignmentLabel, 5, 0);
+        sliderGrid.add(alignmentSlider, 5, 1);
+        sliderGrid.add(alignmentValue, 5, 2);
+
+        alignmentSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                Drone.ALIGNMENT_WEIGHT = newVal.doubleValue();
+                alignmentValue.setText(String.format("%.1f", newVal));
+            }
+        });
 
 
         //-------------------------------------------------
         //                  Drone Info Toolbar
-        //-------------------------------------------------Slider
+        //-------------------------------------------------
 
         infoBar = new ToolBar();
         Drone.initialiseDrones();                                                   // Creates drones, adds them to 'Drones' LinkedList
         arena.getChildren().addAll(Drone.Drones);                                   // Adds drones to arena on GUI
 
         droneInfo = new Label(droneInfo());
-        ruleInfo = new Label(ruleInfo());
-        infoBar.getItems().addAll(droneInfo, cohesionSlider, separationSlider, alignmentSlider);
-        infoBar.setOrientation(Orientation.VERTICAL);
+        infoBar.getItems().addAll(droneInfo);
         //-------------------------------------------------
         //                  GUI
         //-------------------------------------------------
+
         BorderPane root = new BorderPane();                                         // Create container
         root.setStyle("-fx-background-color: transparent;");                        // Sets border-pane background colour to transparent to allow scene colour to display
-                                                                                    // arena for our drones
         arena.setPrefSize(sceneWidth, sceneHeight);                                 // set size for arena
 
-        root.setBottom(toolBar);                                                    // Displays buttons with start stop, etc.
+        controlGrid.setStyle("-fx-background-color:#eeeeee;-fx-opacity:1;");
+        controlGrid.add(sliderGrid, 0, 0);
+        controlGrid.add(buttonGrid, 0, 1);
+
+        root.setBottom(controlGrid);                                                 // Displays sliders controlling rule values, also buttons with start stop, etc./
         root.setRight(infoBar);                                                     // Displays drone information
         root.setTop(menuBar);                                                       // Displays menu bar at top
         root.setCenter(arena);                                                      // set layerPane to center of borderPane 'root'
-        root.getChildren().add(cohesionSlider);
         Scene scene = new Scene(root, sceneWidth, sceneHeight, sceneColour);        // defines settings for scene
+
 
         primaryStage.setTitle("Drone Simulator");                                   // set window title
         primaryStage.setScene(scene);                                               // Sets scene for stage
         primaryStage.show();                                                        // Shows stage.
-
-        startAnimation();
-
-
+        loop.start();
     }
 
 
-    private void startAnimation()   {
+    private AnimationTimer startAnimation()   {
+
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
@@ -138,7 +301,7 @@ public class Main extends Application {
             }
         };
 
-        loop.start();
+        return loop;
     }
 
     public static List<Drone> getDrones() {
@@ -148,9 +311,7 @@ public class Main extends Application {
     private void reinitDrones(boolean changeColour) {
         if(changeColour)    {
 
-            arena.getChildren().removeAll(Drone.Drones);
-            Drone.Drones.clear();
-            Drone.initialiseDrones();
+            clearDrones();
 
             for(int i = 0; i < Drone.Drones.size(); i++) {
 
@@ -161,12 +322,22 @@ public class Main extends Application {
 
         }  else {
 
-            arena.getChildren().removeAll(Drone.Drones);
-            Drone.Drones.clear();
+            clearDrones();
             Drone.initialiseDrones();
             arena.getChildren().addAll(Drone.Drones);
 
         }
+    }
+
+    private void changeColour() {
+        for (Drone drone : Drone.Drones)    {
+            drone.setFill(Drone.randomColour());
+        }
+    }
+
+    private void clearDrones()  {
+        arena.getChildren().removeAll(Drone.Drones);
+        Drone.Drones.clear();
     }
 
     private String droneInfo()   {
@@ -177,9 +348,6 @@ public class Main extends Application {
         for (Drone drone : Drone.Drones) {
 
             output.append(String.format("Drone : %s\tX: %.2f\tY: %.2f\n", droneid++, getLocation(drone).getX(), getLocation(drone).getY()));
-            //output.append(String.format("Drone " + new DecimalFormat("00").format(droneid++) + "\tx: "
-                                                 //+ new DecimalFormat("0.00").format(getLocation(drone).getX()) + "\ty: "
-                                                 //+ new DecimalFormat("0.00").format(getLocation(drone).getY()) + "\n"));
         }
         return output.toString();
     }
@@ -200,12 +368,19 @@ public class Main extends Application {
     private void updateInfo()   {
         infoBar.getItems().clear();
         droneInfo = new Label(droneInfo());
-        //ruleInfo = new Label(ruleInfo());
         infoBar.getItems().addAll(droneInfo);
     }
 
     private Point getLocation(Drone drone)    {
         return drone.location;
+    }
+
+    public static double getMenuBarHeight()  {
+        return menuBar.getHeight();
+    }
+
+    public static double getControlGridHeight()  {
+        return controlGrid.getHeight();
     }
 }
 

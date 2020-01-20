@@ -27,13 +27,12 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
     private double desiredSeparationRadius;
     private Rotate rotationTransform;
-    private int cohesionTotal;
-    private int separationTotal;
-    private int alignmentTotal;
-    private double COHESION_WEIGHT = Settings.COHESION_WEIGHT;
-    private double SEPARATION_WEIGHT = Settings.SEPARATION_WEIGHT;
-    private double ALIGNMENT_WEIGHT = Settings.ALIGNMENT_WEIGHT;
-
+    private int cohesionTotal = 0;
+    private int separationTotal = 0;
+    private int alignmentTotal = 0;
+    public static double COHESION_WEIGHT = Settings.COHESION_WEIGHT;
+    public static double SEPARATION_WEIGHT = Settings.SEPARATION_WEIGHT;
+    public static double ALIGNMENT_WEIGHT = Settings.ALIGNMENT_WEIGHT;
     public Point location;                                                 // Stores X and Y coordinates for drone
     private Point velocity;                                                 // Determines speed of drone - helps with next location
 
@@ -61,7 +60,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     }
 
 
-    public static void createDrone()   {
+    public static Drone createDrone()   {
         int id = Drones.size() + 1;
         Point loc = setRandomLocation();
         double x = loc.getX();
@@ -73,6 +72,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         Drone drone = new Drone(id, x, y, velocity);
         Drones.add(drone);
+        return drone;
         //System.out.println("Drone: " + id + "\t\tX: " + loc.getX() + "\tY: " + loc.getY());
     }
 
@@ -101,18 +101,11 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
             // Adds values to velocity vector
 
-
-            //velocity = velocity
-                    //.add(rule1)       // Cohesion
-                    //.add(rule2)         // Separation
-                    //.add(rule3)       // Alignment
-            ;
-
             edges();
             //limitVelocity();
 
             Point changeInVelocity = new Point (0, 0);
-            changeInVelocity = changeInVelocity.add(rule2, rule3).add(rule1);
+            changeInVelocity = changeInVelocity.add(rule1).add(rule2).add(rule3);
             //double angle = this.getVelocity().angleInDegrees();
             //this.getRotationTransform().setAngle(angle);
             this.setVelocity(this.getVelocity().add(changeInVelocity).limit(this.getMaxSpeed()));       // Limits maxSpeed
@@ -259,24 +252,27 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      */
     public Point edges()    {
 
-        Point Loc = new Point(this.location.getX(), this.location.getY());
-        int menuHeight = 0, tbHeight = 70, infoBarWidth = 195;
-        if (Loc.getX() >= sceneWidth-infoBarWidth)  {
+        Point loc = new Point(this.location.getX(), this.location.getY());
+        double menuBarHeight = Main.getMenuBarHeight(),
+                controlBarHeight = Main.getControlGridHeight();
 
-            Loc.setX(0+droneRadius);
+        if (loc.getX() >= sceneWidth)  {
+
+            loc.setX(0+droneRadius);
         } else if (this.location.getX() <= 0)    {
 
-            Loc.setX(sceneWidth-droneRadius-infoBarWidth);
+            loc.setX(sceneWidth-droneRadius);
         }
 
-        if (this.location.getY() >= sceneHeight - tbHeight)  {        // Refers to bottom of screen
+        if (this.location.getY() >= sceneHeight - controlBarHeight)  {        // Refers to bottom of screen
 
-            Loc.setY(0+droneRadius+menuHeight);
-        } else if (this.location.getY()  <= 0 + menuHeight)    {        // Refers to top of screen
+            loc.setY(0 + droneRadius + menuBarHeight );
 
-            Loc.setY(sceneHeight-droneRadius-tbHeight);
+        } else if (this.location.getY()  <= 0 + menuBarHeight)    {        // Refers to top of screen
+
+            loc.setY(sceneHeight - droneRadius - controlBarHeight);
         }
-        this.location = new Point(Loc.getX(), Loc.getY());
+        this.location = new Point(loc.getX(), loc.getY());
         return this.location;
     }
 

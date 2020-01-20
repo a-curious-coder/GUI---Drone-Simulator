@@ -6,14 +6,14 @@ public class Settings {
     //---------------------------------------------
     //              GUI Settings
     //---------------------------------------------
-    public static int SCENE_WIDTH = 1000;
+    public static int SCENE_WIDTH = 1300;
     public static int SCENE_HEIGHT = SCENE_WIDTH/16 * 9;    // Means that the window ratio will always be 16:9 aspect ratio
     public final static Color BACKGROUND_COLOR = Color.BLACK;
 
     //---------------------------------------------
     //              Drone Settings
     //---------------------------------------------
-    public static int DRONE_COUNT = 25;                 // Number of drones
+    public static int DRONE_COUNT = 20;                 // Number of drones
     public static double DRONE_MASS = 5;               // Creates mass variable
     public static double DRONE_MAX_SPEED = 3;           // Velocity only increases, this restricts it from surpassing this value.
     public static double DRONE_MAX_FORCE = 1;
