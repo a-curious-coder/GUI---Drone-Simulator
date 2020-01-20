@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Point.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" afterDir="false" />
-    </list>
+    <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,10 +21,10 @@
               <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#11456#11457#0" expanded="true" />
-                <element signature="e#13236#13237#0" expanded="true" />
-                <element signature="e#13326#13327#0" expanded="true" />
-                <element signature="e#13424#13425#0" expanded="true" />
+                <element signature="e#11444#11445#0" expanded="true" />
+                <element signature="e#13224#13225#0" expanded="true" />
+                <element signature="e#13314#13315#0" expanded="true" />
+                <element signature="e#13412#13413#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -248,8 +238,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="1" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.2274678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -260,14 +249,14 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33870968" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33870968" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3968637" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3268999" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32630274" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32382134" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -447,10 +436,10 @@
           <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#11456#11457#0" expanded="true" />
-            <element signature="e#13236#13237#0" expanded="true" />
-            <element signature="e#13326#13327#0" expanded="true" />
-            <element signature="e#13424#13425#0" expanded="true" />
+            <element signature="e#11444#11445#0" expanded="true" />
+            <element signature="e#13224#13225#0" expanded="true" />
+            <element signature="e#13314#13315#0" expanded="true" />
+            <element signature="e#13412#13413#0" expanded="true" />
           </folding>
         </state>
       </provider>
