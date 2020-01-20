@@ -25,7 +25,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
     private double maxForce = Settings.DRONE_MAX_FORCE;
     private double maxSpeed = Settings.DRONE_MAX_SPEED;
 
+    private double neighbourRadius;
     private double desiredSeparationRadius;
+    private double obstacleAvoidanceRadius;
     private Rotate rotationTransform;
     private int cohesionTotal = 0;
     private int separationTotal = 0;
@@ -44,7 +46,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      *
      */
     public Drone(int droneUniqueID, double x, double y, Point v) {
-        this.desiredSeparationRadius = droneRadius * 3;
+
         this.location = new Point(x, y);
         this.velocity = v;               // Set velocity
 
@@ -52,6 +54,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         this.velocity = this.velocity.normalize();
         this.velocity = this.velocity.multiply(rnd.nextDouble() * 4);
 
+        this.desiredSeparationRadius = droneRadius * 1;
+        this.obstacleAvoidanceRadius = droneRadius * 3;
+        this.neighbourRadius = droneRadius * 2;
 
         setRadius(droneRadius);                     // Sets drone radius (mass/size)
         setStroke(color);                      // Sets drone edge colour
@@ -62,6 +67,8 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
     public static Drone createDrone()   {
         int id = Drones.size() + 1;
+
+
         Point loc = setRandomLocation();
         double x = loc.getX();
         double y = loc.getY();
@@ -95,9 +102,9 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      */
     public void MoveDrone()   {
 
-            Point rule1 = this.Cohesion(Drones);
-            Point rule2 = this.Separation(Drones);
-            Point rule3 = this.Alignment(Drones);
+            Point rule1 = this.Cohesion();
+            Point rule2 = this.Separation();
+            Point rule3 = this.Alignment();
 
             // Adds values to velocity vector
 
@@ -105,7 +112,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
             //limitVelocity();
 
             Point changeInVelocity = new Point (0, 0);
-            changeInVelocity = changeInVelocity.add(rule1).add(rule2).add(rule3);
+            //changeInVelocity = changeInVelocity.add(rule2).add(rule3);
             //double angle = this.getVelocity().angleInDegrees();
             //this.getRotationTransform().setAngle(angle);
             this.setVelocity(this.getVelocity().add(changeInVelocity).limit(this.getMaxSpeed()));       // Limits maxSpeed
@@ -130,18 +137,24 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      * Searches for a perceived center in a 'flock' of drones.
      * @return return newly calculated perceived center
      */
-    private Point Cohesion(List<Drone> Drones) {
+    private Point Cohesion() {
 
-        cohesionTotal = 0;
         Point pc = new Point(0, 0);          // perceived center, instantiated.
+        cohesionTotal = 0;
+
         for(Drone drone : Drones) {
-            for (Drone neighbour : Drones) {             // For each drone in Drones LinkedList
+
+            for (Drone neighbour : Drones) {
 
                 if (neighbour.equals(drone)) continue;
 
-                // pc + neighbour location for the purpose of steering toward this location
-                pc = pc.add(neighbour.location);
-                cohesionTotal++;
+                double distance = drone.getLocation().distanceTo(neighbour.getLocation());
+
+                if (distance < drone.getNeighbourRadius()) {
+
+                    pc.add(neighbour.getLocation());
+                    cohesionTotal++;
+                }
             }
 
             if (cohesionTotal > 0) {
@@ -154,16 +167,24 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         //System.out.println("Cohesion:\t[" + pc.getX() + ", " + pc.getY() + "]");
         return pc;  // new perceived center
     }
+    /*for (Drone neighbour : Drones) {             // For each drone in Drones LinkedList
 
+        if (neighbour.equals(drone)) continue;
+
+        // pc + neighbour location for the purpose of steering toward this location
+        pc = pc.add(neighbour.location);
+        cohesionTotal++;
+    }*/
     /**
      * Separation function
      * Keeps a minimum distance between drones when they're moving around. Ensures they don't collide.
      *
      * @return return perceived center
      */
-    private Point Separation(List<Drone> Drones) {
+    private Point Separation() {
 
         Point pc = new Point(0, 0);
+        separationTotal = 0;
 
         for (Drone drone : Drones) {
 
@@ -171,25 +192,26 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
                 if (neighbour.equals(drone)) continue;
 
-                double d = drone.getLocation().distanceTo(neighbour.getLocation());
+                double distance = drone.getLocation().distanceTo(neighbour.getLocation());
 
-                if (d <= drone.getDesiredSeparationRadius()) {
+                if (distance <= drone.getDesiredSeparationRadius()) {
 
-                    pc = pc.add(pc.subtract(drone.getLocation(), neighbour.getLocation()).normalize().divide(d));
+                    pc = pc.add(pc.subtract(drone.getLocation(), neighbour.getLocation()).normalize().divide(distance));
                     separationTotal++;
                 }
-
             }
 
             if (separationTotal > 0) {
                 // divide pc by total
                 pc = pc.divide(separationTotal);
             }
+
             pc.multiply(SEPARATION_WEIGHT);
         }
         //System.out.println("\nSeparation:\t[" + pc.getX() + ", " + pc.getY() + "]");
         return pc;
     }
+
 
     /**
      * Alignment function
@@ -197,30 +219,57 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      *
      * @return perceived velocity value
      */
-    private Point Alignment(List<Drone> Drones) {
+    private Point Alignment() {
 
         Point pv = new Point(0, 0); // Perceived Velocity
+        alignmentTotal = 0;
 
-        for(Drone drone : Drones) {
+        for (Drone drone : Drones) {
 
             for (Drone neighbour : Drones) {
 
                 if (neighbour.equals(drone)) continue;
 
-                pv = pv.add(neighbour.getVelocity());
-                alignmentTotal++;
-            
+                double distance = drone.getLocation().distanceTo(drone.getLocation());
+
+                if (distance < drone.getNeighbourRadius()) {
+
+                    pv = pv.add(neighbour.getVelocity());
+                    alignmentTotal++;
+                }
             }
 
             if (alignmentTotal > 0) {
+
                 pv = pv.divide(alignmentTotal).limit(drone.getMaxForce());
             }
-
-            pv = pv.multiply(ALIGNMENT_WEIGHT);
-            //System.out.println("\nAlignment:\t[" + pv.getX() + ", " + pv.getY() + "]");
         }
+
+        pv = pv.multiply(ALIGNMENT_WEIGHT);
         return pv;
+        //System.out.println("\nAlignment:\t[" + pv.getX() + ", " + pv.getY() + "]");
     }
+
+
+   /* private Point Scatter () {
+        for (Drone drone : Drones) {
+            Vector scatter = new Vector();
+            for (Drone neighbour : Drones) {
+
+                if (d < neighbour.getNeighbourRadius()) {
+
+                    if (otherBoid instanceof Predator && !(currentBoid instanceof Predator)) {
+
+                        scatter.add(Vector.subtract(currentBoid.getPosition(), otherBoid.getPosition()).normalize().divide(distance));
+                    }
+
+                }
+
+            }
+        }
+    }*/
+
+
 
 
     private Point bound_position(Drone drone)    {
@@ -455,6 +504,10 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
     public double getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public double getNeighbourRadius() {
+        return neighbourRadius;
     }
 
     public Rotate getRotationTransform() {
