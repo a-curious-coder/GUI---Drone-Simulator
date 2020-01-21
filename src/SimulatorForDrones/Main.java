@@ -4,12 +4,20 @@ package SimulatorForDrones;
 import apple.laf.JRSUIConstants;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Pane;
@@ -18,9 +26,14 @@ import javafx.application.Application;
 import javafx.animation.AnimationTimer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends Application {
 
@@ -28,8 +41,11 @@ public class Main extends Application {
     private int sceneHeight = Settings.SCENE_HEIGHT;
     private Color sceneColour = Settings.BACKGROUND_COLOR;
 
+    private FileChooser fc = new FileChooser();
+    private Desktop desktop = Desktop.getDesktop();
     private Label droneInfo;
     private ToolBar infoBar;
+    BorderPane root = new BorderPane();                                         // Create container for entire GUI
     private Pane arena = new Pane();
     private static MenuBar menuBar = new MenuBar();
     private static GridPane controlGrid = new GridPane();
@@ -39,7 +55,7 @@ public class Main extends Application {
      * @param primaryStage   - Applies these attribute settings to the stage it's given
      */
     @Override
-    public void start(Stage primaryStage) throws InterruptedException {
+    public void start(Stage primaryStage)  {
         AnimationTimer loop = startAnimation();
 
         //-------------------------------------------------
@@ -76,12 +92,33 @@ public class Main extends Application {
 
         open.setOnAction(ActionEvent ->
         {
+            fc.setTitle("Open Drone Simulator File...");
+            File file = fc.showOpenDialog(primaryStage);
+            if(file != null)    {
+                openFile(file);
+            }
+            try (BufferedReader reader = new BufferedReader(new FileReader(new File("Drone.txt")))) {
 
+                String line;
+                while ((line = reader.readLine()) != null)
+                    System.out.println(line);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         save.setOnAction(ActionEvent ->
         {
 
+            fc.setTitle("Save Drone Positions");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", ".txt");
+            fc.getExtensionFilters().add(extFilter);
+
+            File file = fc.showSaveDialog(primaryStage);
+            if (file != null)   {
+                saveDronesToFile(getDroneInfo(), file);
+            }
         });
 
         //--------------------------------
@@ -129,7 +166,7 @@ public class Main extends Application {
 
         reset.setOnAction(ActionEvent ->
         {
-            reinitDrones(true);
+            reinitDrones(false);
         });
 
         clear.setOnAction(ActionEvent ->
@@ -156,12 +193,21 @@ public class Main extends Application {
 
         addPredator.setOnAction(ActionEvent ->
         {
+            Predator predator = new Predator();
+            arena.getChildren().add(predator);
+            getPredators().add(predator);
+            getDrones().add(predator);
 
         });
 
         addObstacle.setOnAction(ActionEvent ->
         {
-
+            Random rnd = new Random();
+            Circle obstacle = new Circle(10, Color.GREEN);
+            obstacle.setLayoutX(sceneWidth-infoBar.getLayoutX()*rnd.nextDouble());
+            obstacle.setLayoutY(sceneHeight-controlGrid.getLayoutY()+menuBar.getLayoutY() *rnd.nextDouble());
+            arena.getChildren().add(obstacle);
+            getObstacles().add(obstacle);
         });
 
         buttonGrid.add(start, 0,0);
@@ -186,7 +232,7 @@ public class Main extends Application {
         Label cohesionLabel = new Label("Cohesion weight");
         cohesionLabel.setMinWidth(Settings.SCENE_WIDTH/3);
         cohesionLabel.setAlignment(Pos.CENTER);
-        Slider cohesionSlider = new Slider(0, 10, Drone.COHESION_WEIGHT);
+        Slider cohesionSlider = new Slider(0, 1, Drone.COHESION_WEIGHT);
         cohesionSlider.setMaxWidth(Settings.SCENE_WIDTH/3 - 30);
         cohesionSlider.setBlockIncrement(0.1);
         cohesionSlider.setStyle("-fx-padding: 10px");
@@ -201,6 +247,7 @@ public class Main extends Application {
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
                 Drone.COHESION_WEIGHT = newVal.doubleValue();
                 cohesionValue.setText(String.format("%.1f", newVal));
+                System.out.println("Drone.COHESION_WEIGHT");
             }
         });
 
@@ -209,7 +256,7 @@ public class Main extends Application {
         Label separationLabel = new Label("Separation weight");
         separationLabel.setMinWidth(Settings.SCENE_WIDTH/3);
         separationLabel.setAlignment(Pos.CENTER);
-        Slider separationSlider = new Slider(0, 10, Drone.SEPARATION_WEIGHT);
+        Slider separationSlider = new Slider(0, 1, Drone.SEPARATION_WEIGHT);
         separationSlider.setMaxWidth(Settings.SCENE_WIDTH/3 - 30);
         separationSlider.setBlockIncrement(0.1);
         separationSlider.setStyle("-fx-padding: 10px");
@@ -232,7 +279,7 @@ public class Main extends Application {
         Label alignmentLabel = new Label("Alignment weight");
         alignmentLabel.setMinWidth(Settings.SCENE_WIDTH/3 - 30);
         alignmentLabel.setAlignment(Pos.CENTER);
-        Slider alignmentSlider = new Slider(0, 10, Drone.ALIGNMENT_WEIGHT);
+        Slider alignmentSlider = new Slider(0, 1, Drone.ALIGNMENT_WEIGHT);
         alignmentSlider.setMaxWidth(Settings.SCENE_WIDTH/3);
         alignmentSlider.setBlockIncrement(0.1);
         final Label alignmentValue = new Label(Double.toString(alignmentSlider.getValue()));
@@ -257,19 +304,22 @@ public class Main extends Application {
 
         infoBar = new ToolBar();
         Drone.initialiseDrones();                                                   // Creates drones, adds them to 'Drones' LinkedList
-        arena.getChildren().addAll(Drone.Drones);                                   // Adds drones to arena on GUI
+        arena.getChildren().addAll(getDrones());                                   // Adds drones to arena on GUI
 
         droneInfo = new Label(droneInfo());
         infoBar.getItems().addAll(droneInfo);
+
+
         //-------------------------------------------------
         //                  GUI
         //-------------------------------------------------
 
-        BorderPane root = new BorderPane();                                         // Create container
         root.setStyle("-fx-background-color: transparent;");                        // Sets border-pane background colour to transparent to allow scene colour to display
         arena.setPrefSize(sceneWidth, sceneHeight);                                 // set size for arena
 
         controlGrid.setStyle("-fx-background-color:#eeeeee;-fx-opacity:1;");
+        controlGrid.setLayoutX(sceneWidth);
+        controlGrid.setLayoutY(300);
         controlGrid.add(sliderGrid, 0, 0);
         controlGrid.add(buttonGrid, 0, 1);
 
@@ -287,6 +337,10 @@ public class Main extends Application {
     }
 
 
+    // ---------------------------------------
+    //              Functions
+    // ---------------------------------------
+
     private AnimationTimer startAnimation()   {
 
         AnimationTimer loop = new AnimationTimer() {
@@ -294,8 +348,8 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
 
-                Drone.Drones.forEach(Drone::MoveDrone);
-                Drone.Drones.forEach(Drone::updateUI);
+                Drone.moveDrones();
+                getDrones().forEach(Drone::updateUI);
                 updateInfo();
 
             }
@@ -304,8 +358,35 @@ public class Main extends Application {
         return loop;
     }
 
+    private void openFile(File file) {
+        try{
+            desktop.open(file);
+        }   catch  (IOException ex) {
+            Logger.getLogger(
+                    Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void saveDronesToFile(String content, File file)   {
+        try{
+            PrintWriter writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
+        } catch (IOException ex)    {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
     public static List<Drone> getDrones() {
         return Drone.Drones;
+    }
+
+    public static List<Predator> getPredators() {
+        return Drone.Predators;
+    }
+
+    public static List<Circle>  getObstacles() {
+        return Drone.Obstacles;
     }
 
     private void reinitDrones(boolean changeColour) {
@@ -313,31 +394,43 @@ public class Main extends Application {
 
             clearDrones();
 
-            for(int i = 0; i < Drone.Drones.size(); i++) {
+            for(int i = 0; i < getDrones().size(); i++) {
 
-                Drone.Drones.get(i).setFill(Drone.randomColour());
+                getDrones().get(i).setFill(Drone.randomColour());
             }
 
-            arena.getChildren().addAll(Drone.Drones);
+            arena.getChildren().addAll(getDrones());
 
         }  else {
 
             clearDrones();
             Drone.initialiseDrones();
-            arena.getChildren().addAll(Drone.Drones);
+            arena.getChildren().addAll(getDrones());
 
         }
     }
 
     private void changeColour() {
-        for (Drone drone : Drone.Drones)    {
+        for (Drone drone : getDrones())    {
             drone.setFill(Drone.randomColour());
         }
     }
 
     private void clearDrones()  {
-        arena.getChildren().removeAll(Drone.Drones);
-        Drone.Drones.clear();
+        arena.getChildren().removeAll(getDrones());
+        getDrones().clear();
+    }
+
+    private String getDroneInfo()   {
+        StringBuilder output = new StringBuilder();
+        int droneid = 1;
+
+        for(int i = 0; i < 30; i++)  {
+            output.append(String.format("%d %.2f %.2f\n", droneid++,
+                            getLocation(Drone.Drones.get(i)).getX(),
+                            getLocation(Drone.Drones.get(i)).getY()));
+        }
+        return output.toString();
     }
 
     private String droneInfo()   {
@@ -345,9 +438,9 @@ public class Main extends Application {
         StringBuilder output = new StringBuilder();
         int droneid = 1;
 
-        for (Drone drone : Drone.Drones) {
+        for (Drone drone : getDrones()) {
 
-            output.append(String.format("Drone : %s\tX: %.2f\tY: %.2f\n", droneid++, getLocation(drone).getX(), getLocation(drone).getY()));
+            output.append(String.format("Drone : %d\tX: %.2f\tY: %.2f\n", droneid++, getLocation(drone).getX(), getLocation(drone).getY()));
         }
         return output.toString();
     }
@@ -355,7 +448,7 @@ public class Main extends Application {
     private static String ruleInfo()    {
         StringBuilder output = new StringBuilder();
 
-        for (int i = 0; i < Drone.Drones.size(); i++) {
+        for (int i = 0; i < getDrones().size(); i++) {
             int droneCounter = i + 1;
             output.append("Cohesion: \t"     +      "value\n"   +
                           "Separation: \t"     +    "value\n"   +

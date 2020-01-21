@@ -23,6 +23,12 @@ public class Point {
         public double getX() { return this.x; }
         public double getY() { return this.y; }
 
+    /**
+     * Due to limitations of Point library, you cannot individually set X and Y values, only both.
+     * The issue here is that if y is holding a value and you want to only set X, you need to reset the Y value.
+     * This function stores the Y value and sets x whilst passing the stored y value - maintaining all values necessary
+     *
+     */
         public void setX(double x) { this.x = x; }
         public void setY(double y) { this.y = y; }
 
