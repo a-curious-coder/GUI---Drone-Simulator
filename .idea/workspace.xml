@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="" />
+    <list default="true" id="88f0aa5d-24c2-409f-ae6e-082326e16921" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/GUI___Drone_Simulator_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Drone.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI---Drone-Simulator/SimulatorForDrones/Settings.class" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,17 +25,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Point.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="744">
+              <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="3006">
+              <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#11444#11445#0" expanded="true" />
-                <element signature="e#13224#13225#0" expanded="true" />
-                <element signature="e#13314#13315#0" expanded="true" />
-                <element signature="e#13412#13413#0" expanded="true" />
+                <element signature="e#16531#16532#0" expanded="true" />
+                <element signature="e#16568#16569#0" expanded="true" />
+                <element signature="e#16616#16617#0" expanded="true" />
+                <element signature="e#16658#16659#0" expanded="true" />
+                <element signature="e#16710#16711#0" expanded="true" />
+                <element signature="e#16756#16757#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -33,40 +55,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="857">
-              <caret line="107" column="57" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
+            <state relative-caret-position="153">
+              <caret line="84" column="20" selection-start-line="84" selection-start-column="12" selection-end-line="84" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14965#14966#0" expanded="true" />
-                <element signature="e#15053#15054#0" expanded="true" />
-                <element signature="e#15123#15124#0" expanded="true" />
-                <element signature="e#15210#15211#0" expanded="true" />
-                <element signature="e#15308#15309#0" expanded="true" />
-                <element signature="e#15374#15375#0" expanded="true" />
-                <element signature="e#15440#15441#0" expanded="true" />
-                <element signature="e#15529#15530#0" expanded="true" />
+                <element signature="e#16195#16196#0" expanded="true" />
+                <element signature="e#16283#16284#0" expanded="true" />
+                <element signature="e#16349#16350#0" expanded="true" />
+                <element signature="e#16436#16437#0" expanded="true" />
+                <element signature="e#16534#16535#0" expanded="true" />
+                <element signature="e#16631#16632#0" expanded="true" />
+                <element signature="e#16696#16697#0" expanded="true" />
+                <element signature="e#16769#16770#0" expanded="true" />
+                <element signature="e#16857#16858#0" expanded="true" />
+                <element signature="e#16937#16938#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Point.java">
+        <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Predator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-930">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-              <folding>
-                <element signature="e#1353#1354#0" expanded="true" />
-                <element signature="e#1436#1437#0" expanded="true" />
-                <element signature="e#1814#1815#0" expanded="true" />
-                <element signature="e#1896#1897#0" expanded="true" />
-                <element signature="e#2095#2096#0" expanded="true" />
-                <element signature="e#2177#2178#0" expanded="true" />
-                <element signature="e#2921#2922#0" expanded="true" />
-                <element signature="e#2999#3000#0" expanded="true" />
-                <element signature="e#3251#3252#0" expanded="true" />
-                <element signature="e#3307#3308#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="231">
+              <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -74,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-314">
-              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
+            <state relative-caret-position="189">
+              <caret line="9" column="43" lean-forward="true" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -91,36 +103,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>droneInfo</find>
-      <find>d</find>
-      <find>d :</find>
-      <find>separatio</find>
-      <find>getLocation</find>
-      <find>Point2D</find>
-      <find>Point2</find>
-      <find>separation</find>
-      <find>move</find>
-      <find>acceleration</find>
-      <find>limitVeloc</find>
-      <find>desiredSep</find>
-      <find>Separation</find>
-      <find>initi</find>
-      <find>alignment</find>
-      <find>border</find>
-      <find>drone</find>
-      <find>controlDash</find>
-      <find>createDrone</find>
-      <find>constra</find>
+      <find>boids</find>
+      <find>scatter</find>
+      <find>SCATTER</find>
+      <find>addPred</find>
+      <find>setMax</find>
+      <find>setX</find>
       <find>getDrones</find>
-      <find>infoBar</find>
+      <find>move</find>
+      <find>MoveDrone</find>
+      <find>separatio</find>
+      <find>Boid</find>
+      <find>Move</find>
+      <find>0, 1</find>
+      <find>arena</find>
+      <find>contr</find>
+      <find>infobar</find>
       <find>edges</find>
-      <find>randomColo</find>
-      <find>Vector</find>
-      <find>randomColour</find>
-      <find>slider</find>
-      <find>pos</find>
-      <find>movedrone</find>
-      <find>menu</find>
+      <find>menuBar</find>
+      <find>initi</find>
+      <find>clearDrones</find>
+      <find>init</find>
+      <find>obstac</find>
+      <find>Syst</find>
+      <find>GridPane</find>
+      <find>droneInfo</find>
+      <find>infoBar</find>
+      <find>infoBar.add(droneInfo, 0, 0);</find>
+      <find>createDrone</find>
+      <find>createDr</find>
+      <find>addDrone</find>
     </findStrings>
     <replaceStrings>
       <replace>droneID</replace>
@@ -129,6 +141,10 @@
       <replace>x</replace>
       <replace>randomColour</replace>
       <replace>Point</replace>
+      <replace>drone</replace>
+      <replace>neighbour</replace>
+      <replace>Drones</replace>
+      <replace>Drone</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -138,8 +154,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Vector.java" />
-        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Predator.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Point.java" />
+        <option value="$PROJECT_DIR$/src/SimulatorForDrones/Predator.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Settings.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Drone.java" />
         <option value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
@@ -147,9 +163,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="877" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -163,6 +178,24 @@
             <path>
               <item name="GUI---Drone-Simulator" type="b2602c69:ProjectViewProjectNode" />
               <item name="GUI---Drone-Simulator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GUI---Drone-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GUI---Drone-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GUI---Drone-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GUI---Drone-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GUI---Drone-Simulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GUI---Drone-Simulator" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="artifacts" type="462c0819:PsiDirectoryNode" />
+              <item name="GUI___Drone_Simulator_jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GUI---Drone-Simulator" type="b2602c69:ProjectViewProjectNode" />
@@ -185,9 +218,9 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="MTConfigurable" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/SimulatorForDrones/Main.java" />
@@ -204,7 +237,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JAR Application.GUI---Drone-Simulator.jar">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SimulatorForDrones.Main" />
       <module name="GUI---Drone-Simulator" />
@@ -218,8 +251,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GUI---Drone-Simulator.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/GUI___Drone_Simulator_jar/GUI---Drone-Simulator.jar" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.GUI---Drone-Simulator.jar" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -237,10 +275,19 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2274678" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23676682" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -249,16 +296,16 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33870968" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3968637" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.33775634" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39565742" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3293124" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3293124" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32630274" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32448733" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32382134" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.3220748" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -269,7 +316,7 @@
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2274678" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2274678" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -278,16 +325,16 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33870968" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3968637" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33870968" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3960047" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3268999" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.32506204" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32382134" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32258064" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -351,7 +398,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Predator.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/javafx-src.zip!/javafx/geometry/Point2D.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -388,58 +434,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Point.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-930">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="744">
+          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Predator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="44" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="84" column="20" selection-start-line="84" selection-start-column="12" selection-end-line="84" selection-end-column="20" />
           <folding>
-            <element signature="e#1353#1354#0" expanded="true" />
-            <element signature="e#1436#1437#0" expanded="true" />
-            <element signature="e#1814#1815#0" expanded="true" />
-            <element signature="e#1896#1897#0" expanded="true" />
-            <element signature="e#2095#2096#0" expanded="true" />
-            <element signature="e#2177#2178#0" expanded="true" />
-            <element signature="e#2921#2922#0" expanded="true" />
-            <element signature="e#2999#3000#0" expanded="true" />
-            <element signature="e#3251#3252#0" expanded="true" />
-            <element signature="e#3307#3308#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#16195#16196#0" expanded="true" />
+            <element signature="e#16283#16284#0" expanded="true" />
+            <element signature="e#16349#16350#0" expanded="true" />
+            <element signature="e#16436#16437#0" expanded="true" />
+            <element signature="e#16534#16535#0" expanded="true" />
+            <element signature="e#16631#16632#0" expanded="true" />
+            <element signature="e#16696#16697#0" expanded="true" />
+            <element signature="e#16769#16770#0" expanded="true" />
+            <element signature="e#16857#16858#0" expanded="true" />
+            <element signature="e#16937#16938#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-314">
-          <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Drone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="857">
-          <caret line="107" column="57" selection-start-line="107" selection-start-column="57" selection-end-line="107" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#14965#14966#0" expanded="true" />
-            <element signature="e#15053#15054#0" expanded="true" />
-            <element signature="e#15123#15124#0" expanded="true" />
-            <element signature="e#15210#15211#0" expanded="true" />
-            <element signature="e#15308#15309#0" expanded="true" />
-            <element signature="e#15374#15375#0" expanded="true" />
-            <element signature="e#15440#15441#0" expanded="true" />
-            <element signature="e#15529#15530#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="189">
+          <caret line="9" column="43" lean-forward="true" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SimulatorForDrones/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+        <state relative-caret-position="3006">
+          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#11444#11445#0" expanded="true" />
-            <element signature="e#13224#13225#0" expanded="true" />
-            <element signature="e#13314#13315#0" expanded="true" />
-            <element signature="e#13412#13413#0" expanded="true" />
+            <element signature="e#16531#16532#0" expanded="true" />
+            <element signature="e#16568#16569#0" expanded="true" />
+            <element signature="e#16616#16617#0" expanded="true" />
+            <element signature="e#16658#16659#0" expanded="true" />
+            <element signature="e#16710#16711#0" expanded="true" />
+            <element signature="e#16756#16757#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -450,10 +495,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>GUI---Drone-Simulator:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
