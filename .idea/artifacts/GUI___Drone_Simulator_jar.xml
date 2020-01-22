@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="GUI---Drone-Simulator:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/GUI___Drone_Simulator_jar</output-path>
-    <root id="archive" name="GUI---Drone-Simulator.jar">
-      <element id="module-output" name="GUI---Drone-Simulator" />
-    </root>
-  </artifact>
-</component>
