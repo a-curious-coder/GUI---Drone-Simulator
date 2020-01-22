@@ -14,24 +14,24 @@ public class Settings {
     //              Drone Settings
     //---------------------------------------------
     public static int DRONE_COUNT = 30;                 // Number of drones
-    public static double DRONE_MASS = 8;               // Creates mass variable
-    public static double DRONE_MAX_SPEED = 3;           // Velocity only increases, this restricts it from surpassing this value.
-    public static double DRONE_MAX_FORCE = 0.5;
-    public static Color DRONE_COLOR = Color.YELLOW;     //Drone.randomColour();
+    public static double DRONE_MASS = 5;               // Creates mass variable
+    public static double DRONE_MAX_SPEED = 5;           // Velocity only increases, this restricts it from surpassing this value.
+    public static double DRONE_MAX_FORCE = 0.2;
+    public static Color DRONE_COLOR = Color.MEDIUMSLATEBLUE;     //Drone.randomColour();
     public static double DRONE_INITIAL_VELOCITY = 0.1;  // Gives each drone a base velocity as a minimum to start from.
     public static double DRONE_MIN_DISTANCE = DRONE_MASS * 2d * 5; // 1 == arbitrary val
     //---------------------------------------------
     //              Predator Settings
     //---------------------------------------------
     public static double PREDATOR_MAX_SPEED = DRONE_MAX_SPEED * 3;
-    public static double PREDATOR_RADIUS = DRONE_MASS * 3;
+    public static double PREDATOR_RADIUS = 7;
     public static Color PREDATOR_COLOUR = Color.RED;
     //---------------------------------------------
     //              Rule Settings
     //---------------------------------------------
-    public static double SEPARATION_WEIGHT = 0.5;
-    public static double ALIGNMENT_WEIGHT = 0.4;
-    public static double COHESION_WEIGHT = 0.2;
+    public static double COHESION_WEIGHT = 1.5;
+    public static double SEPARATION_WEIGHT = 5;
+    public static double ALIGNMENT_WEIGHT = 4;
     public static double SCATTER_WEIGHT = 100;
 
     // ensure that attraction is applied with at least min and max

@@ -1,6 +1,7 @@
 package SimulatorForDrones;
 
 // JavaFX Libraries
+import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;  // Colour library
 import javafx.scene.shape.Circle; // Imports Circle library and allows me to represent a drone with the circle.
 import javafx.scene.transform.Rotate;
@@ -56,23 +57,20 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         setRadius(droneRadius);                     // Sets drone radius (mass/size)
         setStroke(color);                      // Sets drone edge colour
-        setFill(color.deriveColor(1, 1, 1, 0.2));   // Sets drone internal colour.
+        setFill(color.deriveColor(1, 1, 2, 0.5));   // Sets drone internal colour.
 
     }
 
-
+    /**
+     * Creates drone with random location
+     * Adds drone to LinkedList
+     * @return      drone
+     */
     public static Drone createDrone()   {
-        int id = Drones.size() + 1;
 
-
-        Point loc = setRandomLocation();
-        double x = loc.getX();
-        double y = loc.getY();
-
-        Drone drone = new Drone(x, y);
+        Drone drone = new Drone(setRandomLocation().getX(), setRandomLocation().getY());
         Drones.add(drone);
         return drone;
-        //System.out.println("Drone: " + id + "\t\tX: " + loc.getX() + "\tY: " + loc.getY());
     }
 
     /**
@@ -125,8 +123,6 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         setLayoutX(this.location.getX());
         setLayoutY(this.location.getY());
-        //this.setLayoutX(this.getLocation().getX());
-        //this.setLayoutY(this.getLocation().getY());
 
     }
 
@@ -162,7 +158,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
             }
 
         pc = pc.multiply(COHESION_WEIGHT);
-        System.out.println("Cohesion:\t[" + pc.getX() + ", " + pc.getY() + "]");
+        //System.out.println("Cohesion:\t[" + pc.getX() + ", " + pc.getY() + "]");
         return pc ;//= pc.subtract(this.getLocation());  // new perceived center vector
 
     }
@@ -175,32 +171,37 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
      */
     private static Point Separation(Drone drone) {
 
-        Point pc = new Point(0, 0);
-        int separationTotal = 0;
+            Point separation = new Point();
+
+            int separationTotal = 0;
 
             for (Drone neighbour : Drones) {
 
                 if (neighbour.equals(drone)) continue;
 
-                    double distance = drone.getLocation().distanceTo(neighbour.getLocation());
+                double distance = drone.getLocation().distanceTo(neighbour.getLocation());
 
-                    if (distance <= drone.getDesiredSeparationRadius()) {
+                if (distance <= drone.getDesiredSeparationRadius()) {
 
-                        pc = pc.add((pc.subtract(drone.getLocation()).subtract(neighbour.getLocation())).normalize().divide(distance));
-                        separationTotal++;
+                    separation = separation.add(separation.subtract(drone.getLocation(), neighbour.getLocation()).normalize().divide(distance));
+
+                    separationTotal++;
                 }
+
+
             }
+
 
             if (separationTotal > 0) {
-                // divide pc by total
-                pc = pc.divide(separationTotal);
+
+                separation = separation.divide(separationTotal);
             }
 
-        pc = pc.multiply(SEPARATION_WEIGHT);
+            separation = separation.multiply(SEPARATION_WEIGHT);
+            //System.out.println("\nSeparation:\t[" + pc.getX() + ", " + pc.getY() + "]");
+        return separation;
+        }
 
-        System.out.println("\nSeparation:\t[" + pc.getX() + ", " + pc.getY() + "]");
-        return pc;
-    }
 
 
     /**
@@ -234,7 +235,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
 
         pv = pv.multiply(ALIGNMENT_WEIGHT);
 
-        System.out.println("\nAlignment:\t[" + pv.getX() + ", " + pv.getY() + "]");
+        //System.out.println("\nAlignment:\t[" + pv.getX() + ", " + pv.getY() + "]");
         return pv;
     }
 
@@ -326,7 +327,7 @@ public class Drone extends Circle   { // Drone extends circle attributes - repre
         double menuBarHeight = Main.getMenuBarHeight(),
                 controlBarHeight = Main.getControlGridHeight();
 
-        if (loc.getX() >= sceneWidth)  {
+        if (loc.getX() >= sceneWidth - 200)  {
 
             loc.setX(0+droneRadius);
         } else if (drone.location.getX() <= 0)    {
