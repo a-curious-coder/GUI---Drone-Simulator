@@ -22,20 +22,39 @@ These 'rule' functions output varied vector values in regards to the next locati
 
 <details><summary>Trial 2</summary>
 	
-![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/videos/Trial%202.gif)
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%202.gif)
 
 Here, I believe the cohesion and separation functions were working correctly however as I started to work on different aspects of the program, these simple functions became complicated...
 </details>
 
 <details><summary>Trial 3</summary>
 	
-![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/videos/Trial%203.gif)
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%203.gif)
 
 Here's an example of how I unintentionally reversed progress and broke my program. The drones are all moving to the bottom corner here. I believe the reason could be that one of the rule functions determining next movement were outputting a super high value. Due to window boundaries I'd set, the drones could not move 'out of scope'.
 </details>
 
-### Trial 4
-### Trial 5
-### Trial 6
-### Trial 7
-### Successful Trial...
+<details><summary>Trial 4</summary>
+	
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%204.gif)
+
+
+</details>
+
+<details><summary>Trial 5</summary>
+	
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%205.gif)
+
+</details>
+
+<details><summary>Trial 6</summary>
+	
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%206.gif)
+
+</details>
+
+
+	
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%207.gif)
+
+This is the first successful trial of drones following the rules I've set as well as the predators who inherit the drone's movement rules. Obstacles are also avoided thanks to the avoid function I've created.
