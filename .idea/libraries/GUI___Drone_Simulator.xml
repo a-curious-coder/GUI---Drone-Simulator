@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GUI---Drone-Simulator">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/GUI___Drone_Simulator_jar/GUI---Drone-Simulator.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
