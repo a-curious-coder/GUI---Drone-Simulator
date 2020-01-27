@@ -53,8 +53,6 @@ Here's an example of how I unintentionally reversed progress and broke my progra
 
 </details>
 
-
-	
-![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial%207.gif)
+![ezgif com-video-to-gif](https://github.com/zardoss/GUI---Drone-Simulator/blob/master/gifs/Trial-7.gif)
 
 This is the first successful trial of drones following the rules I've set as well as the predators who inherit the drone's movement rules. Obstacles are also avoided thanks to the avoid function I've created.
